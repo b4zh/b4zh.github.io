@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Blog</title>
+		<link>https://b4zh.github.io/</link>
+		<description>Recent content on Blog</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Fri, 25 Sep 2026 08:29:57 +0200</lastBuildDate>
+		
+			<atom:link href="https://b4zh.github.io/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Init</title>
+				<link>https://b4zh.github.io/posts/init/</link>
+				<pubDate>Fri, 25 Sep 2026 08:29:57 +0200</pubDate>
+				<guid>https://b4zh.github.io/posts/init/</guid>
+				<description>&lt;h1 id=&#34;prime&#34;&gt;Prime&lt;/h1&gt;&#xA;&lt;p&gt;Primera &lt;strong&gt;publicación&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;uno&lt;/li&gt;&#xA;&lt;li&gt;dos&lt;/li&gt;&#xA;&lt;li&gt;tres&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;whoami&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+			</item>
+	</channel>
+</rss>
