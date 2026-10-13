@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+<html lang="es-ES"
+    dir="auto"
+    data-theme="dark">
+
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+
+<title>🐍 Bash Modo Vim · B4ZH</title>
+<meta name="description" content="Bash con resaltado de sintaxis y modo de edición de vim">
+<meta name="keywords" content="linux, bash, vim">
+<meta name="author" content="b4zh">
+<link rel="canonical" href="https://b4zh.github.io/linux/bash-blesh/">
+<meta name="theme-color" content="#eff0ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12161a" media="(prefers-color-scheme: dark)">
+<script>
+    (function () {
+        var r = document.documentElement;
+        r.classList.add("js");
+        try {
+            var t = localStorage.getItem("pref-theme");
+            if (t === "dark" || t === "light") r.dataset.theme = t;
+        } catch (e) {   }
+    })();
+</script>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/archivo.woff2" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono.woff2" crossorigin="anonymous">
+<link rel="preload stylesheet" as="style" href="/css/main.min.88afbb0be7d7423c2bef84c4fea04338ea4dedfdfaccfef7e73758a22e7bde13.css" integrity="sha256-iK&#43;7C&#43;fXQjwr74TE/qBDOOpN7f36zP735zdYoi573hM="
+    crossorigin="anonymous">
+<meta property="og:url" content="https://b4zh.github.io/linux/bash-blesh/">
+<meta property="og:site_name" content="B4ZH">
+<meta property="og:title" content="🐍 Bash Modo Vim">
+<meta property="og:description" content="Bash con resaltado de sintaxis y modo de edición de vim">
+<meta property="og:locale" content="es_ES">
+<meta property="og:type" content="article"><meta property="article:section" content="linux">
+<meta property="article:published_time" content="2026-10-05T11:47:50&#43;02:00">
+<meta property="article:modified_time" content="2026-10-05T11:47:50&#43;02:00">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="bash">
+<meta property="article:tag" content="vim">
+<meta property="article:author" content="b4zh">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="🐍 Bash Modo Vim">
+<meta name="twitter:description" content="Bash con resaltado de sintaxis y modo de edición de vim">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"b4zh"},"dateModified":"2026-10-05T11:47:50+02:00","datePublished":"2026-10-05T11:47:50+02:00","description":"Bash con resaltado de sintaxis y modo de edición de vim","headline":"🐍 Bash Modo Vim","inLanguage":"es-ES","keywords":"linux, bash, vim","mainEntityOfPage":{"@id":"https://b4zh.github.io/linux/bash-blesh/","@type":"WebPage"},"publisher":{"@type":"Person","name":"b4zh"},"url":"https://b4zh.github.io/linux/bash-blesh/","wordCount":499}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://b4zh.github.io/","name":"🏠 Home","position":1},{"@type":"ListItem","item":"https://b4zh.github.io/linux/","name":"🐧 Linux","position":2},{"@type":"ListItem","item":"https://b4zh.github.io/linux/bash-blesh/","name":"🐍 Bash Modo Vim","position":3}]}</script>
+
+
+</head>
+
+<body id="top" class="sheet">
+    <a class="skip-link" href="#main">Skip to content</a>
+    
+<header class="header">
+    <div class="header__inner">
+        <a class="header__brand" href="/">
+            <img class="header__logo" src="/images/pepo_hu_ba353a7560e79252.webp"
+                width="24" height="24" alt="">
+            <span class="header__label">b4zh</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+            <a class="nav__item is-active" href="/linux/" aria-current="page">Linux</a>
+            <a class="nav__item" href="/ctf/">CTF</a>
+            <a class="nav__item" href="">Links</a>
+            <a class="nav__item" href="/tags/">Tags</a>
+            <a class="nav__item" href="/archive/">Archive</a>
+            <a class="nav__item" href="/search/">Buscar</a>
+        </nav>
+        <div class="header__controls">
+            <span class="header__rule" aria-hidden="true"></span>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode"
+                title="Toggle light and dark mode" data-to-dark="Cambiar al modo oscuro"
+                data-to-light="Cambiar al modo claro">
+                
+<svg class="icon icon--moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M21 13.2A9 9 0 1 1 10.8 3a7 7 0 0 0 10.2 10.2z"/>
+</svg>
+
+                
+<svg class="icon icon--sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="4.2"/>
+    <path d="M12 2v2.2M12 19.8V22M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2 12h2.2M19.8 12H22M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>
+</svg>
+
+            </button>
+        </div>
+    </div>
+</header>
+
+    <div class="sheet__frame">
+        <main class="main" id="main" tabindex="-1">
+<article class="post">
+    <header class="post-header"><nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item">
+            <a href="/">🏠 Home</a>
+        </li>
+        <li class="breadcrumbs__item">
+            <a href="/linux/">🐧 Linux</a>
+        </li>
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">🐍 Bash Modo Vim</li>
+    </ol>
+</nav>
+
+        <div class="post-titlerow">
+            <h1 class="post-title">🐍 Bash Modo Vim</h1>
+
+        </div>
+<dl class="title-block">
+    <div class="title-block__row">
+        <dt class="title-block__label">Creado</dt>
+        <dd class="title-block__value"><time datetime="2026-10-05T11:47:50+02:00" title="2026-10-05 11:47:50 +0200 +0200">5 de octubre de 2026</time></dd>
+    </div>
+    <div class="title-block__row">
+        <dt class="title-block__label">Lectura</dt>
+        <dd class="title-block__value">3 min · 499 palabras</dd>
+    </div>
+    <div class="title-block__row">
+        <dt class="title-block__label">Por</dt>
+        <dd class="title-block__value">b4zh</dd>
+    </div>
+    <div class="title-block__row">
+        <dt class="title-block__label">Subject</dt>
+        <dd class="title-block__value"><a href="/tags/linux/">Linux</a>, <a href="/tags/bash/">Bash</a>, <a href="/tags/vim/">Vim</a></dd>
+    </div>
+</dl>
+
+    </header>
+
+<details class="toc">
+    <summary class="toc__summary">Contenidos</summary><div class="toc__body"><nav id="TableOfContents" aria-label="Contenidos">
+  <ul>
+    <li><a href="#qué-es-blesh">¿Qué es ble.sh?</a></li>
+    <li><a href="#instalación-y-configuración">Instalación y configuración</a>
+      <ul>
+        <li><a href="#instalación">Instalación</a></li>
+        <li><a href="#configuración">Configuración</a></li>
+      </ul>
+    </li>
+    <li><a href="#fin">Fin</a></li>
+  </ul>
+</nav></div>
+</details>
+
+
+    <div class="content">
+        <h2 id="qué-es-blesh" class="heading">¿Qué es ble.sh?
+    <a class="heading__anchor" href="#qu%c3%a9-es-blesh" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>
+<a href="https://github.com/akinomyoga/ble.sh" class="link-external" rel="noopener noreferrer" target="_blank">Bash Line Editor
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+ es un editor de línea de comandos escrito en bash puro.</p>
+<p>Con <code>ble.sh</code> podemos agregar a <code>bash</code> las siguientes características:</p>
+<ul>
+<li>Resaltado de sintaxis.</li>
+<li>Autocompletado mejorado.</li>
+<li>Modo de edición de Vim.</li>
+</ul>
+<h2 id="instalación-y-configuración" class="heading">Instalación y configuración
+    <a class="heading__anchor" href="#instalaci%c3%b3n-y-configuraci%c3%b3n" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+
+<div class="alert alert--important" role="note">
+    <p class="alert__label">Importante</p>
+    <div class="alert__body"><p>Los pasos aquí descritos corresponden a la documentación oficial de 
+<a href="https://github.com/akinomyoga/ble.sh#1-usage" class="link-external" rel="noopener noreferrer" target="_blank">ble.sh
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+</p></div>
+</div>
+<h3 id="instalación" class="heading">Instalación
+    <a class="heading__anchor" href="#instalaci%c3%b3n" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h3>
+<ol>
+<li>Clonamos el repositorio:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone --recursive https://github.com/akinomyoga/ble.sh.git
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ble.sh
+</span></span></code></pre></div><ol start="2">
+<li>Instalamos <code>ble.sh</code> en nuestro sistema con el comando <code>make</code>.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">make install
+</span></span></code></pre></div><p>Esto instalará <strong>blesh</strong> en <code>~/.local/share/blesh/</code> y <code>~/.local/share/doc/blesh/</code></p>
+<ol start="3">
+<li>Para cargar <code>ble.sh</code> por defecto en sesiones interactivas de <strong>bash</strong>, agregamos las siguientes líneas en nuestro <code>.bashrc</code>.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># bashrc</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Agrega estas líneas al principio de .bashrc:</span>
+</span></span><span class="line"><span class="cl"><span class="o">[[</span> <span class="nv">$-</span> <span class="o">==</span> *i* <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> -- /path/to/blesh/ble.sh --attach<span class="o">=</span>none
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Aquí van los ajustes de tu archivo bashrc...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Agregue esta línea al final de .bashrc:</span>
+</span></span><span class="line"><span class="cl"><span class="o">[[</span> ! <span class="si">${</span><span class="nv">BLE_VERSION</span><span class="p">-</span><span class="si">}</span> <span class="o">]]</span> <span class="o">||</span> ble-attach
+</span></span></code></pre></div>
+<div class="alert alert--important" role="note">
+    <p class="alert__label">Importante</p>
+    <div class="alert__body"><p>Reemplaza <code>/path/to/blesh/ble.sh</code> por la ruta en donde se encuentra instalado <code>ble.sh</code>. Si no cambiaste la ruta de instalación durante la compilación, la ruta es <code>~/.local/share/blesh/ble.sh</code>.</p></div>
+</div>
+<h3 id="configuración" class="heading">Configuración
+    <a class="heading__anchor" href="#configuraci%c3%b3n" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h3>
+<p>Para configurar ciertas características de <code>ble.sh</code> tenemos que crear el fichero <code>.blerc</code> en el directorio <strong>home</strong> de nuestro usuario.</p>
+<p><code>.blerc</code> es un script Bash que se ejecuta durante la carga de <strong>blesh</strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">touch ~/.blerc
+</span></span></code></pre></div><p><strong>Blesh</strong> proporciona una plantilla del fichero de configuración llamada 
+<a href="https://github.com/akinomyoga/ble.sh/blob/master/blerc.template" class="link-external" rel="noopener noreferrer" target="_blank">blerc.template
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+</p>
+<p>Mi configuración es esta:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># deshabilitar el autocompletado</span>
+</span></span><span class="line"><span class="cl">bleopt <span class="nv">complete_auto_complete</span><span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># deshabilitar los marcadores &#34;[ble: ...]&#34;</span>
+</span></span><span class="line"><span class="cl">bleopt <span class="nv">prompt_eol_mark</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">bleopt <span class="nv">edit_marker</span><span class="o">=</span>
+</span></span><span class="line"><span class="cl">bleopt <span class="nv">edit_marker_error</span><span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># habilitar el modo vim</span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> -o vi
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># configuración del modo vim</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> blerc/vim-mode-hook <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># desactivar la información del modo actual</span>
+</span></span><span class="line"><span class="cl">        bleopt <span class="nv">keymap_vi_mode_show</span><span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Forma del cursor para cada modo</span>
+</span></span><span class="line"><span class="cl">        ble-bind -m vi_nmap --cursor <span class="m">2</span>
+</span></span><span class="line"><span class="cl">        ble-bind -m vi_imap --cursor <span class="m">5</span>
+</span></span><span class="line"><span class="cl">        ble-bind -m vi_omap --cursor <span class="m">4</span>
+</span></span><span class="line"><span class="cl">        ble-bind -m vi_xmap --cursor <span class="m">2</span>
+</span></span><span class="line"><span class="cl">        ble-bind -m vi_cmap --cursor <span class="m">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Descartar la línea con C-c</span>
+</span></span><span class="line"><span class="cl">        ble-bind -m vi_imap -f <span class="s1">&#39;C-c&#39;</span> discard-line
+</span></span><span class="line"><span class="cl">        ble-bind -m vi_nmap -f <span class="s1">&#39;C-c&#39;</span> discard-line
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># agregando funcionalidades de vim-surround</span>
+</span></span><span class="line"><span class="cl">        ble-import vim-surround
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">blehook/eval-after-load keymap_vi blerc/vim-mode-hook
+</span></span></code></pre></div><p>Con esta configuración:</p>
+<ul>
+<li>
+<p>Deshabilito el autocompletado.</p>
+</li>
+<li>
+<p>Deshabilito los marcadores tipo <code>[ble: ...]</code>.</p>
+</li>
+<li>
+<p>Habilito el modo vim.</p>
+</li>
+<li>
+<p>Establezco la forma del cursor en cada modo.</p>
+</li>
+<li>
+<p><code>CTRL</code> + <code>C</code> para descartar la línea.</p>
+</li>
+<li>
+<p>Agrego funcionalidades de vim-surround</p>
+</li>
+</ul>
+<p>Para obtener información más detallada sobre que <strong>funciones</strong> puedes deshabilitar y sobre la configuración del <strong>modo vi(vim)</strong>, tienes a tu disposición la <strong>documentación oficial</strong>.</p>
+<ul>
+<li>
+<p>
+<a href="https://github.com/akinomyoga/ble.sh#22-disable-features" class="link-external" rel="noopener noreferrer" target="_blank">Deshabilitar funciones
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://github.com/akinomyoga/ble.sh/wiki/Vi-%28Vim%29-editing-mode" class="link-external" rel="noopener noreferrer" target="_blank">Modo Vi(Vim)
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+</p>
+</li>
+</ul>
+<h4 id="establecer-tiempo-de-espera-para-esc" class="heading">Establecer tiempo de espera para ESC.
+    <a class="heading__anchor" href="#establecer-tiempo-de-espera-para-esc" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h4>
+<p>Notarás cierto retraso al cambiar de modos en el <strong>modo vi(vim)</strong>.</p>
+<p>Para reducir el tiempo de espera, agregamos lo siguiente en alguna parte de nuestro <code>~/.bashrc</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Tiempo de espera de ESC - ble.sh</span>
+</span></span><span class="line"><span class="cl">stty <span class="nb">time</span> <span class="m">0</span> <span class="c1"># tiempo de espera en el pseudo-terminal handler, configurado mediante stty</span>
+</span></span><span class="line"><span class="cl"><span class="nb">bind</span> <span class="s1">&#39;set keyseq-timeout 1&#39;</span> <span class="c1"># tiempo de espera para Readline en bash</span>
+</span></span></code></pre></div><h2 id="fin" class="heading">Fin
+    <a class="heading__anchor" href="#fin" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>Esto sería todo de mi parte, no olvides revisar la 
+<a href="https://github.com/akinomyoga/ble.sh" class="link-external" rel="noopener noreferrer" target="_blank">documentación oficial de blesh
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+ para entender todo con más detalle.</p>
+
+    </div>
+
+    <footer class="post-footer">
+        <ul class="tag-list">
+            <li><a href="/tags/linux/">Linux</a></li>
+            <li><a href="/tags/bash/">Bash</a></li>
+            <li><a href="/tags/vim/">Vim</a></li>
+        </ul>
+        <div class="post-actions">
+
+<div class="share">
+    <span class="share__label">Compartir</span>
+    <ul class="share__list">
+        <li>
+            <a class="share__link" href="mailto:?subject=%F0%9F%90%8D&#43;Bash&#43;Modo&#43;Vim&amp;body=https%3A%2F%2Fb4zh.github.io%2Flinux%2Fbash-blesh%2F" rel="noopener noreferrer" target="_blank"
+                aria-label="Share on Email (opens in a new window)" title="Email">
+<svg class="icon icon--email" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <rect x="2.5" y="5" width="19" height="14" rx="2"/>
+    <path d="m3 7 9 6 9-6"/>
+</svg>
+</a>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    </footer>
+
+</article>
+
+        </main>
+<nav class="zone-rail" id="zone-rail" aria-label="Zones">
+    <a class="zone-rail__mark" href="#qu%c3%a9-es-blesh">
+        <span aria-hidden="true">A</span>
+        <span class="visually-hidden">¿Qué es ble.sh?</span>
+    </a>
+    <a class="zone-rail__mark" href="#instalaci%c3%b3n-y-configuraci%c3%b3n">
+        <span aria-hidden="true">B</span>
+        <span class="visually-hidden">Instalación y configuración</span>
+    </a>
+    <a class="zone-rail__mark" href="#fin">
+        <span aria-hidden="true">C</span>
+        <span class="visually-hidden">Fin</span>
+    </a>
+</nav>
+<script>
+    
+    
+    
+    
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        var rail = document.getElementById("zone-rail");
+        var sheet = document.querySelector(".main");
+        if (!rail || !sheet) return;
+
+        var marks = Array.prototype.slice.call(rail.querySelectorAll(".zone-rail__mark"));
+        var targets = marks.map(function (m) {
+            return document.getElementById(decodeURIComponent(m.hash.slice(1)));
+        });
+        if (!marks.length || targets.indexOf(null) !== -1) return;
+
+        
+        
+        
+        
+        
+        
+        
+        function place() {
+            var box = sheet.getBoundingClientRect();
+            var top = box.top + window.scrollY;
+            var height = sheet.offsetHeight;
+            if (!height) return;
+            var offsets = targets.map(function (target) {
+                return (target.getBoundingClientRect().top + window.scrollY - top) / height;
+            });
+            marks.forEach(function (mark, i) {
+                var y = Math.min(Math.max(offsets[i], 0), 1);
+                mark.style.setProperty("--zone-top", (y * 100).toFixed(3) + "%");
+            });
+            rail.dataset.placed = "true";
+        }
+
+        
+        function spy() {
+            var line = window.scrollY + window.innerHeight * 0.25;
+            var current = -1;
+            targets.forEach(function (t, i) {
+                if (t.getBoundingClientRect().top + window.scrollY <= line) current = i;
+            });
+            marks.forEach(function (mark, i) {
+                if (i === current) {
+                    mark.setAttribute("aria-current", "true");
+                } else {
+                    mark.removeAttribute("aria-current");
+                }
+            });
+        }
+
+        
+        
+        
+        
+        var frame = null;
+        var replace = false;
+        function schedule(withPlace) {
+            if (withPlace === true) replace = true;
+            if (frame) return;
+            frame = requestAnimationFrame(function () {
+                frame = null;
+                if (replace) { replace = false; place(); }
+                spy();
+            });
+        }
+
+        place();
+        spy();
+        window.addEventListener("scroll", schedule, { passive: true });
+        window.addEventListener("resize", function () { schedule(true); }, { passive: true });
+        
+        window.addEventListener("load", function () { place(); spy(); });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+    });
+</script>
+
+    </div>
+
+    
+<footer class="footer">
+    <div class="footer__inner">
+        <span class="footer__issuer">b4zh - 2026
+        </span>
+        <span class="footer__meta">
+            <a href="/index.xml">RSS</a>
+            <span class="footer__sep" aria-hidden="true"></span>
+            <span>Construido con <a href="https://gohugo.io/" rel="noopener noreferrer"
+                    target="_blank">Hugo<span class="visually-hidden"> (opens in a new window)</span>
+</a></span>
+        </span>
+    </div>
+</footer>
+<a class="top-link" id="top-link" href="#top" aria-label="Back to top" title="Back to top">
+<svg class="icon icon--arrow-up" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M12 19V5M6 11l6-6 6 6"/>
+</svg>
+</a>
+
+<script>
+    (function () {
+        var root = document.documentElement;
+
+        var toggle = document.getElementById("theme-toggle");
+        if (toggle) {
+            var media = window.matchMedia("(prefers-color-scheme: dark)");
+
+            
+            var isDark = function () {
+                return root.dataset.theme === "dark" ||
+                    (root.dataset.theme !== "light" && media.matches);
+            };
+
+            
+            
+            
+            
+            
+            
+            var relabel = function () {
+                var next = isDark() ? toggle.dataset.toLight : toggle.dataset.toDark;
+                if (!next) return;
+                toggle.setAttribute("aria-label", next);
+                toggle.title = next;
+            };
+
+            relabel();
+
+            
+            
+            
+            
+            
+            
+            var snap = function (change) {
+                root.classList.add("is-theme-switching");
+                void root.offsetWidth;
+                change();
+                void root.offsetWidth;
+                root.classList.remove("is-theme-switching");
+            };
+
+            toggle.addEventListener("click", function () {
+                snap(function () {
+                    root.dataset.theme = isDark() ? "light" : "dark";
+                });
+                try { localStorage.setItem("pref-theme", root.dataset.theme); } catch (e) { }
+                relabel();
+            });
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            media.addEventListener("change", function () {
+                root.classList.add("is-theme-switching");
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        root.classList.remove("is-theme-switching");
+                    });
+                });
+                relabel();
+            });
+        }
+
+        var top = document.getElementById("top-link");
+        if (top) {
+            var onScroll = function () {
+                top.classList.toggle("is-visible", window.scrollY > 800);
+            };
+            window.addEventListener("scroll", onScroll, { passive: true });
+            onScroll();
+        }
+    })();
+</script>
+<script>
+    (function () {
+        var copy = "Copiar",
+            copied = "Copiado",
+            failed = "Copia fallida",
+            label = "Copy code block {n}";
+
+        
+        
+        
+        
+        
+        
+        
+        var announce = document.createElement("p");
+        announce.className = "visually-hidden";
+        announce.setAttribute("role", "status");
+        announce.setAttribute("aria-live", "polite");
+        document.body.appendChild(announce);
+
+        document.querySelectorAll(".content .highlight").forEach(function (block, i) {
+            var code = block.querySelector("code");
+            if (!code) return;
+            var button = document.createElement("button");
+            button.className = "copy-code";
+            button.type = "button";
+            button.textContent = copy;
+            
+            
+            
+            
+            
+            button.setAttribute("aria-label", label.replace("{n}", i + 1));
+
+            var restore = function () {
+                setTimeout(function () {
+                    button.textContent = copy;
+                    delete button.dataset.state;
+                    
+                    
+                    
+                    announce.textContent = "";
+                }, 1500);
+            };
+
+            button.addEventListener("click", function () {
+                
+                
+                
+                var text = (block.querySelector("td:last-child code") || code).innerText;
+                
+                
+                Promise.resolve()
+                    .then(function () {
+                        if (!navigator.clipboard) throw new Error("unavailable");
+                        return navigator.clipboard.writeText(text);
+                    })
+                    .then(function () {
+                        button.textContent = copied;
+                        announce.textContent = copied;
+                        restore();
+                    })
+                    .catch(function () {
+                        button.textContent = failed;
+                        button.dataset.state = "failed";
+                        announce.textContent = failed;
+                        restore();
+                    });
+            });
+            block.appendChild(button);
+        });
+    })();
+</script>
+</body>
+
+</html>

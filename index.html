@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html lang="es-ES"
+    dir="auto"
+    data-theme="dark">
+
+<head>
+	<meta name="generator" content="Hugo 0.167.0"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+
+<title>B4ZH</title>
+<meta name="description" content="b4zh blog">
+<meta name="keywords" content="linux">
+<meta name="author" content="b4zh">
+<link rel="canonical" href="https://b4zh.github.io/">
+<meta name="theme-color" content="#eff0ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12161a" media="(prefers-color-scheme: dark)">
+<script>
+    (function () {
+        var r = document.documentElement;
+        r.classList.add("js");
+        try {
+            var t = localStorage.getItem("pref-theme");
+            if (t === "dark" || t === "light") r.dataset.theme = t;
+        } catch (e) {   }
+    })();
+</script>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/archivo.woff2" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono.woff2" crossorigin="anonymous">
+<link rel="preload stylesheet" as="style" href="/css/main.min.88afbb0be7d7423c2bef84c4fea04338ea4dedfdfaccfef7e73758a22e7bde13.css" integrity="sha256-iK&#43;7C&#43;fXQjwr74TE/qBDOOpN7f36zP735zdYoi573hM="
+    crossorigin="anonymous">
+
+<link rel="alternate" type="application/rss&#43;xml" href="https://b4zh.github.io/index.xml" title="B4ZH">
+<link rel="alternate" type="application/json" href="https://b4zh.github.io/index.json" title="B4ZH"><meta property="og:url" content="https://b4zh.github.io/">
+<meta property="og:site_name" content="B4ZH">
+<meta property="og:title" content="B4ZH">
+<meta property="og:description" content="b4zh blog">
+<meta property="og:locale" content="es_ES">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="B4ZH">
+<meta name="twitter:description" content="b4zh blog">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","description":"b4zh blog","name":"B4ZH","sameAs":["mailto:b4zh@tuta.io","https://github.com/b4zh"],"url":"https://b4zh.github.io/"}</script>
+
+
+</head>
+
+<body id="top" class="sheet">
+    <a class="skip-link" href="#main">Skip to content</a>
+    
+<header class="header">
+    <div class="header__inner">
+        <a class="header__brand" href="/">
+            <img class="header__logo" src="/images/pepo_hu_ba353a7560e79252.webp"
+                width="24" height="24" alt="">
+            <span class="header__label">b4zh</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+            <a class="nav__item" href="/linux/">Linux</a>
+            <a class="nav__item" href="/ctf/">CTF</a>
+            <a class="nav__item" href="">Links</a>
+            <a class="nav__item" href="/tags/">Tags</a>
+            <a class="nav__item" href="/archive/">Archive</a>
+            <a class="nav__item" href="/search/">Buscar</a>
+        </nav>
+        <div class="header__controls">
+            <span class="header__rule" aria-hidden="true"></span>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode"
+                title="Toggle light and dark mode" data-to-dark="Cambiar al modo oscuro"
+                data-to-light="Cambiar al modo claro">
+                
+<svg class="icon icon--moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M21 13.2A9 9 0 1 1 10.8 3a7 7 0 0 0 10.2 10.2z"/>
+</svg>
+
+                
+<svg class="icon icon--sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="4.2"/>
+    <path d="M12 2v2.2M12 19.8V22M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2 12h2.2M19.8 12H22M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>
+</svg>
+
+            </button>
+        </div>
+    </div>
+</header>
+
+    <div class="sheet__frame">
+        <main class="main" id="main" tabindex="-1">
+<div class="office">
+    
+<div class="profile">
+    <img class="profile__avatar" src="/images/pepo_hu_512e726cf8bc127.webp"
+        srcset="/images/pepo_hu_512e726cf8bc127.webp 1x, /images/pepo_hu_fdb0ed97090e4771.webp 2x"
+        width="120" height="120"
+        alt="b4zh" draggable="false">
+
+    <div class="profile__identity">
+        <h1 class="profile__name">b4zh</h1>
+        <p class="profile__subtitle">I&rsquo;m b4zh, not bash!</p>
+    </div>
+<ul class="social-icons">
+    <li>
+        <a class="social-icons__link" href="mailto:b4zh@tuta.io" rel="noopener noreferrer me" target="_blank"
+            aria-label="Email (opens in a new window)" title="Email">
+<svg class="icon icon--email" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <rect x="2.5" y="5" width="19" height="14" rx="2"/>
+    <path d="m3 7 9 6 9-6"/>
+</svg>
+</a>
+    </li>
+    <li>
+        <a class="social-icons__link" href="https://github.com/b4zh" rel="noopener noreferrer me" target="_blank"
+            aria-label="Github (opens in a new window)" title="Github">
+<svg class="icon icon--github" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path fill="currentColor" stroke="none" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg>
+</a>
+    </li>
+</ul>
+
+    <dl class="title-block profile__fields">
+        <div class="title-block__row">
+            <dt class="title-block__label">BTW</dt>
+            <dd class="title-block__value">🐧 I use Arch</dd>
+        </div>
+    </dl>
+</div>
+
+    
+<section class="profile-views">
+    <nav class="profile-views__index" aria-label="Profile views">
+        <a class="profile-views__tab" href="#profile-view-about">Whoami</a>
+        <a class="profile-views__tab" href="#profile-view-projects">Proyectos</a>
+        <a class="profile-views__tab" href="#profile-view-contact">Contacto</a>
+    </nav>
+    <div class="profile-view" id="profile-view-about" data-profile-view role="region" aria-label="Whoami">
+        <div class="content"><p>Soy 
+<a href="https://github.com/b4zh" class="link-external" rel="noopener noreferrer" target="_blank">b4zh
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+ , un <em>“aficionado”</em> de la <strong>ciberseguridad</strong>.</p>
+<p>Practico resolviendo <strong>CTFs</strong> de distintas plataformas, mis favoritas son 
+<a href="https://vulnyx.com" class="link-external" rel="noopener noreferrer" target="_blank">Vulnyx
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+ y 
+<a href="https://hackmyvm.eu" class="link-external" rel="noopener noreferrer" target="_blank">HackMyVM
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+.</p>
+<p>En este sitio publicaré cosas que considere interesantes y que tengan que ver con <strong>GNU/Linux</strong> y/o <strong>ciberseguridad</strong>.</p>
+</div>
+    </div>
+    <div class="profile-view" id="profile-view-projects" data-profile-view role="region" aria-labelledby="profile-view-projects-band">
+        <div class="sheet-band">
+            <h2 class="sheet-band__label" id="profile-view-projects-band">References</h2>
+            <span class="sheet-band__label">1 proyecto</span>
+        </div>
+        <ul class="projects">
+    <li class="projects__row">
+        <h3 class="projects__name">
+            <a href="https://github.com/b4zh/kali-suckless" rel="noopener noreferrer" target="_blank">🐉 kali-suckless
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+        </h3><p class="projects__description">Kali Linux con un toque suckless</p>
+        <p class="projects__tags"><span class="projects__tag">Linux</span></p>
+    </li>
+</ul>
+
+    </div>
+    <div class="profile-view" id="profile-view-contact" data-profile-view role="region" aria-label="Contacto">
+        <dl class="title-block">
+            <div class="title-block__row">
+                <dt class="title-block__label">Email</dt>
+                <dd class="title-block__value"><a href="mailto:b4zh@tuta.io">b4zh@tuta.io</a></dd>
+            </div>
+            <div class="title-block__row">
+                <dt class="title-block__label">Clave pública OpenPGP</dt>
+                <dd class="title-block__value"><a href="./b4zh-public-key.asc">b4zh-public-key.asc</a></dd>
+            </div>
+            <div class="title-block__row">
+                <dt class="title-block__label">Huella digital</dt>
+                <dd class="title-block__value">4CA9 3560 CDB4 AE7F AB82 7228 5AE4 BDAC CF77 5EA3</dd>
+            </div>
+        </dl>
+    </div>
+</section>
+<script>
+    
+    
+    
+    (function () {
+        var root = document.querySelector(".profile-views");
+        if (!root) return;
+        var index = root.querySelector(".profile-views__index");
+        if (!index) return;
+
+        var tabs = Array.prototype.slice.call(index.querySelectorAll(".profile-views__tab"));
+        var panels = Array.prototype.slice.call(root.querySelectorAll("[data-profile-view]"));
+        
+        
+        if (!tabs.length || tabs.length !== panels.length) return;
+
+        function show(i, moveFocus) {
+            panels.forEach(function (panel, n) { panel.hidden = n !== i; });
+            tabs.forEach(function (tab, n) {
+                tab.classList.toggle("is-active", n === i);
+                if (n === i) tab.setAttribute("aria-current", "true");
+                else tab.removeAttribute("aria-current");
+            });
+            
+            
+            
+            
+            
+            
+            
+            if (moveFocus && panels[i].focus) {
+                panels[i].setAttribute("tabindex", "-1");
+                panels[i].focus({ preventScroll: true });
+            }
+        }
+
+        
+        var start = 0;
+        tabs.forEach(function (tab, i) { if (tab.hash === location.hash) start = i; });
+        show(start, false);
+
+        tabs.forEach(function (tab, i) {
+            tab.addEventListener("click", function (event) {
+                event.preventDefault();
+                show(i, true);
+                
+                
+                if (history.replaceState) history.replaceState(null, "", tab.hash);
+            });
+        });
+    })();
+</script>
+
+    
+<div class="button-row">
+    <a class="button" href="/linux/">
+        <span>Linux</span>
+<svg class="icon icon--arrow-right" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+</svg>
+
+    </a>
+    <a class="button" href="/ctf">
+        <span>CTF</span>
+<svg class="icon icon--arrow-right" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+</svg>
+
+    </a>
+    <a class="button" href="/links">
+        <span>LINKS</span>
+<svg class="icon icon--arrow-right" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+</svg>
+
+    </a>
+</div>
+
+</div>
+
+
+<p class="sheet-stamp">
+    <span class="sheet-stamp__kind">Drawing office</span>
+    <span class="sheet-stamp__count">2 sheets</span>
+</p>
+
+
+
+<section class="latest">
+    <div class="sheet-band">
+        <h2 class="sheet-band__label">Reciente</h2>
+        <a class="sheet-band__label" href="/archive/">Publicaciones
+<svg class="icon icon--arrow-right" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+</svg>
+</a>
+    </div>
+    <ul class="post-list post-list--latest">
+        <li><article class="post-card" aria-label="Rick y Morty - Test Post">
+<figure class="cover">
+    <img class="cover__image" src="/ctf/rickymorty/rick_hu_79b8c4e573c69fa6.webp" srcset="/ctf/rickymorty/rick_hu_79b8c4e573c69fa6.webp 480w"
+        sizes="(max-width: 40rem) calc(100vw - 2rem), (max-width: 848px) calc(100vw - 3rem), 800px" width="480" height="369" alt="Rick y Morty portada"
+        loading="lazy"
+        decoding="async">
+</figure>
+
+    <div class="post-card__body">
+        <p class="post-card__meta">
+            <time class="post-card__date" datetime="2026-10-12T13:02:17Z"
+                title="2026-10-12 13:02:17 &#43;0000 UTC">12 de octubre de 2026</time>
+            <span class="post-card__extent">1 min</span><span class="draft-badge">Borrador</span>
+        </p>
+        <h3 class="post-card__title"><a href="/ctf/rickymorty/">Rick y Morty - Test Post</a></h3>
+        <p class="post-card__summary">Probando ando</p>
+    </div>
+</article>
+</li>
+        <li><article class="post-card" aria-label="🐍 Bash Modo Vim">
+
+    <div class="post-card__body">
+        <p class="post-card__meta">
+            <time class="post-card__date" datetime="2026-10-05T11:47:50&#43;02:00"
+                title="2026-10-05 11:47:50 &#43;0200 &#43;0200">5 de octubre de 2026</time>
+            <span class="post-card__extent">3 min</span>
+        </p>
+        <h3 class="post-card__title"><a href="/linux/bash-blesh/">🐍 Bash Modo Vim</a></h3>
+        <p class="post-card__summary">Bash con resaltado de sintaxis y modo de edición de vim</p>
+    </div>
+</article>
+</li>
+    </ul>
+</section>
+
+
+        </main>
+
+    </div>
+
+    
+<footer class="footer">
+    <div class="footer__inner">
+        <span class="footer__issuer">b4zh - 2026
+        </span>
+        <span class="footer__meta">
+            <a href="/index.xml">RSS</a>
+            <span class="footer__sep" aria-hidden="true"></span>
+            <span>Construido con <a href="https://gohugo.io/" rel="noopener noreferrer"
+                    target="_blank">Hugo<span class="visually-hidden"> (opens in a new window)</span>
+</a></span>
+        </span>
+    </div>
+</footer>
+<a class="top-link" id="top-link" href="#top" aria-label="Back to top" title="Back to top">
+<svg class="icon icon--arrow-up" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M12 19V5M6 11l6-6 6 6"/>
+</svg>
+</a>
+
+<script>
+    (function () {
+        var root = document.documentElement;
+
+        var toggle = document.getElementById("theme-toggle");
+        if (toggle) {
+            var media = window.matchMedia("(prefers-color-scheme: dark)");
+
+            
+            var isDark = function () {
+                return root.dataset.theme === "dark" ||
+                    (root.dataset.theme !== "light" && media.matches);
+            };
+
+            
+            
+            
+            
+            
+            
+            var relabel = function () {
+                var next = isDark() ? toggle.dataset.toLight : toggle.dataset.toDark;
+                if (!next) return;
+                toggle.setAttribute("aria-label", next);
+                toggle.title = next;
+            };
+
+            relabel();
+
+            
+            
+            
+            
+            
+            
+            var snap = function (change) {
+                root.classList.add("is-theme-switching");
+                void root.offsetWidth;
+                change();
+                void root.offsetWidth;
+                root.classList.remove("is-theme-switching");
+            };
+
+            toggle.addEventListener("click", function () {
+                snap(function () {
+                    root.dataset.theme = isDark() ? "light" : "dark";
+                });
+                try { localStorage.setItem("pref-theme", root.dataset.theme); } catch (e) { }
+                relabel();
+            });
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            media.addEventListener("change", function () {
+                root.classList.add("is-theme-switching");
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        root.classList.remove("is-theme-switching");
+                    });
+                });
+                relabel();
+            });
+        }
+
+        var top = document.getElementById("top-link");
+        if (top) {
+            var onScroll = function () {
+                top.classList.toggle("is-visible", window.scrollY > 800);
+            };
+            window.addEventListener("scroll", onScroll, { passive: true });
+            onScroll();
+        }
+    })();
+</script>
+<script>
+    (function () {
+        var copy = "Copiar",
+            copied = "Copiado",
+            failed = "Copia fallida",
+            label = "Copy code block {n}";
+
+        
+        
+        
+        
+        
+        
+        
+        var announce = document.createElement("p");
+        announce.className = "visually-hidden";
+        announce.setAttribute("role", "status");
+        announce.setAttribute("aria-live", "polite");
+        document.body.appendChild(announce);
+
+        document.querySelectorAll(".content .highlight").forEach(function (block, i) {
+            var code = block.querySelector("code");
+            if (!code) return;
+            var button = document.createElement("button");
+            button.className = "copy-code";
+            button.type = "button";
+            button.textContent = copy;
+            
+            
+            
+            
+            
+            button.setAttribute("aria-label", label.replace("{n}", i + 1));
+
+            var restore = function () {
+                setTimeout(function () {
+                    button.textContent = copy;
+                    delete button.dataset.state;
+                    
+                    
+                    
+                    announce.textContent = "";
+                }, 1500);
+            };
+
+            button.addEventListener("click", function () {
+                
+                
+                
+                var text = (block.querySelector("td:last-child code") || code).innerText;
+                
+                
+                Promise.resolve()
+                    .then(function () {
+                        if (!navigator.clipboard) throw new Error("unavailable");
+                        return navigator.clipboard.writeText(text);
+                    })
+                    .then(function () {
+                        button.textContent = copied;
+                        announce.textContent = copied;
+                        restore();
+                    })
+                    .catch(function () {
+                        button.textContent = failed;
+                        button.dataset.state = "failed";
+                        announce.textContent = failed;
+                        restore();
+                    });
+            });
+            block.appendChild(button);
+        });
+    })();
+</script>
+</body>
+
+</html>

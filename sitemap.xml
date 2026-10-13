@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://b4zh.github.io/ctf/</loc>
+    <lastmod>2026-10-12T13:02:17+00:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/</loc>
+    <lastmod>2026-10-12T13:02:17+00:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/ctf/rickymorty/</loc>
+    <lastmod>2026-10-12T13:02:17+00:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/linux/bash-blesh/</loc>
+    <lastmod>2026-10-05T11:47:50+02:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/linux/</loc>
+    <lastmod>2026-10-05T11:47:50+02:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/tags/bash/</loc>
+    <lastmod>2026-10-05T11:47:50+02:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/tags/linux/</loc>
+    <lastmod>2026-10-05T11:47:50+02:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/tags/</loc>
+    <lastmod>2026-10-05T11:47:50+02:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/tags/vim/</loc>
+    <lastmod>2026-10-05T11:47:50+02:00</lastmod>
+  </url><url>
+    <loc>https://b4zh.github.io/archive/</loc>
+  </url><url>
+    <loc>https://b4zh.github.io/search/</loc>
+  </url>
+</urlset>
