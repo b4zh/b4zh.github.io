@@ -7,14 +7,24 @@
     <generator>Hugo</generator>
     <language>es-ES</language>
     <copyright>&#169; 2026 b4zh</copyright>
-    <lastBuildDate>Mon, 05 Oct 2026 11:47:50 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 13 Oct 2026 11:44:53 +0000</lastBuildDate>
     <atom:link href="https://b4zh.github.io/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>📦 VirtualBox en Archlinux</title>
+      <link>https://b4zh.github.io/linux/virtualbox-archlinux/</link>
+      <pubDate>Tue, 13 Oct 2026 11:44:53 +0000</pubDate>
+      <guid>https://b4zh.github.io/linux/virtualbox-archlinux/</guid>
+      <description>Instalar virtualbox en archlinux.</description>
+      <category>linux</category>
+      <category>virtualbox</category>
+      <category>archlinux</category>
+    </item>
     <item>
       <title>🐍 Bash Modo Vim</title>
       <link>https://b4zh.github.io/linux/bash-blesh/</link>
       <pubDate>Mon, 05 Oct 2026 11:47:50 +0200</pubDate>
       <guid>https://b4zh.github.io/linux/bash-blesh/</guid>
-      <description>Bash con resaltado de sintaxis y modo de edición de vim</description>
+      <description>Bash con resaltado de sintaxis y modo de edición de vim.</description>
       <category>linux</category>
       <category>bash</category>
       <category>vim</category>

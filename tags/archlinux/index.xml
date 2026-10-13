@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Archlinux · B4ZH</title>
+    <link>https://b4zh.github.io/tags/archlinux/</link>
+    <description>b4zh blog</description>
+    <generator>Hugo</generator>
+    <language>es-ES</language>
+    <copyright>&#169; 2026 b4zh</copyright>
+    <lastBuildDate>Tue, 13 Oct 2026 11:44:53 +0000</lastBuildDate>
+    <atom:link href="https://b4zh.github.io/tags/archlinux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>📦 VirtualBox en Archlinux</title>
+      <link>https://b4zh.github.io/linux/virtualbox-archlinux/</link>
+      <pubDate>Tue, 13 Oct 2026 11:44:53 +0000</pubDate>
+      <guid>https://b4zh.github.io/linux/virtualbox-archlinux/</guid>
+      <description>Instalar virtualbox en archlinux.</description>
+      <category>linux</category>
+      <category>virtualbox</category>
+      <category>archlinux</category>
+    </item>
+  </channel>
+</rss>

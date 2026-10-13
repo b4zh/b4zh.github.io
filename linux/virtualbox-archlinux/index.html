@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+<html lang="es-ES"
+    dir="auto"
+    data-theme="dark">
+
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+
+<title>📦 VirtualBox en Archlinux · B4ZH</title>
+<meta name="description" content="Instalar virtualbox en archlinux.">
+<meta name="keywords" content="linux, virtualbox, archlinux">
+<meta name="author" content="b4zh">
+<link rel="canonical" href="https://b4zh.github.io/linux/virtualbox-archlinux/">
+<meta name="theme-color" content="#eff0ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12161a" media="(prefers-color-scheme: dark)">
+<script>
+    (function () {
+        var r = document.documentElement;
+        r.classList.add("js");
+        try {
+            var t = localStorage.getItem("pref-theme");
+            if (t === "dark" || t === "light") r.dataset.theme = t;
+        } catch (e) {   }
+    })();
+</script>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/archivo.woff2" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono.woff2" crossorigin="anonymous">
+<link rel="preload stylesheet" as="style" href="/css/main.min.88afbb0be7d7423c2bef84c4fea04338ea4dedfdfaccfef7e73758a22e7bde13.css" integrity="sha256-iK&#43;7C&#43;fXQjwr74TE/qBDOOpN7f36zP735zdYoi573hM="
+    crossorigin="anonymous">
+<meta property="og:url" content="https://b4zh.github.io/linux/virtualbox-archlinux/">
+<meta property="og:site_name" content="B4ZH">
+<meta property="og:title" content="📦 VirtualBox en Archlinux">
+<meta property="og:description" content="Instalar virtualbox en archlinux.">
+<meta property="og:locale" content="es_ES">
+<meta property="og:type" content="article"><meta property="article:section" content="linux">
+<meta property="article:published_time" content="2026-10-13T11:44:53Z">
+<meta property="article:modified_time" content="2026-10-13T11:44:53Z">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="virtualbox">
+<meta property="article:tag" content="archlinux">
+<meta property="article:author" content="b4zh">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="📦 VirtualBox en Archlinux">
+<meta name="twitter:description" content="Instalar virtualbox en archlinux.">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"b4zh"},"dateModified":"2026-10-13T11:44:53Z","datePublished":"2026-10-13T11:44:53Z","description":"Instalar virtualbox en archlinux.","headline":"📦 VirtualBox en Archlinux","inLanguage":"es-ES","keywords":"linux, virtualbox, archlinux","mainEntityOfPage":{"@id":"https://b4zh.github.io/linux/virtualbox-archlinux/","@type":"WebPage"},"publisher":{"@type":"Person","name":"b4zh"},"url":"https://b4zh.github.io/linux/virtualbox-archlinux/","wordCount":249}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://b4zh.github.io/","name":"🏠 Home","position":1},{"@type":"ListItem","item":"https://b4zh.github.io/linux/","name":"🐧 Linux","position":2},{"@type":"ListItem","item":"https://b4zh.github.io/linux/virtualbox-archlinux/","name":"📦 VirtualBox en Archlinux","position":3}]}</script>
+
+
+</head>
+
+<body id="top" class="sheet">
+    <a class="skip-link" href="#main">Skip to content</a>
+    
+<header class="header">
+    <div class="header__inner">
+        <a class="header__brand" href="/">
+            <img class="header__logo" src="/images/pepo_hu_ba353a7560e79252.webp"
+                width="24" height="24" alt="">
+            <span class="header__label">b4zh</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+            <a class="nav__item is-active" href="/linux/" aria-current="page">Linux</a>
+            <a class="nav__item" href="/ctf/">CTF</a>
+            <a class="nav__item" href="/links/">Links</a>
+            <a class="nav__item" href="/tags/">Tags</a>
+            <a class="nav__item" href="/archive/">Archive</a>
+            <a class="nav__item" href="/search/">Buscar</a>
+        </nav>
+        <div class="header__controls">
+            <span class="header__rule" aria-hidden="true"></span>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode"
+                title="Toggle light and dark mode" data-to-dark="Cambiar al modo oscuro"
+                data-to-light="Cambiar al modo claro">
+                
+<svg class="icon icon--moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M21 13.2A9 9 0 1 1 10.8 3a7 7 0 0 0 10.2 10.2z"/>
+</svg>
+
+                
+<svg class="icon icon--sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="4.2"/>
+    <path d="M12 2v2.2M12 19.8V22M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2 12h2.2M19.8 12H22M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>
+</svg>
+
+            </button>
+        </div>
+    </div>
+</header>
+
+    <div class="sheet__frame">
+        <main class="main" id="main" tabindex="-1">
+<article class="post">
+    <header class="post-header"><nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol class="breadcrumbs__list">
+        <li class="breadcrumbs__item">
+            <a href="/">🏠 Home</a>
+        </li>
+        <li class="breadcrumbs__item">
+            <a href="/linux/">🐧 Linux</a>
+        </li>
+        <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">📦 VirtualBox en Archlinux</li>
+    </ol>
+</nav>
+
+        <div class="post-titlerow">
+            <h1 class="post-title">📦 VirtualBox en Archlinux</h1>
+
+        </div>
+<dl class="title-block">
+    <div class="title-block__row">
+        <dt class="title-block__label">Creado</dt>
+        <dd class="title-block__value"><time datetime="2026-10-13T11:44:53Z" title="2026-10-13 11:44:53 +0000 UTC">13 de octubre de 2026</time></dd>
+    </div>
+    <div class="title-block__row">
+        <dt class="title-block__label">Lectura</dt>
+        <dd class="title-block__value">2 min · 249 palabras</dd>
+    </div>
+    <div class="title-block__row">
+        <dt class="title-block__label">Por</dt>
+        <dd class="title-block__value">b4zh</dd>
+    </div>
+    <div class="title-block__row">
+        <dt class="title-block__label">Subject</dt>
+        <dd class="title-block__value"><a href="/tags/linux/">Linux</a>, <a href="/tags/virtualbox/">Virtualbox</a>, <a href="/tags/archlinux/">Archlinux</a></dd>
+    </div>
+    <div class="title-block__row title-block__row--flag">
+        <dt class="title-block__label">Estado</dt>
+        <dd class="title-block__value"><span class="draft-badge">Borrador</span></dd>
+    </div>
+</dl>
+
+    </header>
+
+<details class="toc">
+    <summary class="toc__summary">Contenidos</summary><div class="toc__body"><nav id="TableOfContents" aria-label="Contenidos">
+  <ul>
+    <li><a href="#instalar-virtualbox">Instalar VirtualBox</a></li>
+    <li><a href="#cargar-los-módulos-del-kernel-de-virtualbox">Cargar los módulos del kernel de VirtualBox</a></li>
+    <li><a href="#añadir-tu-usuario-al-grupo-vboxusers">Añadir tu usuario al grupo vboxusers</a></li>
+    <li><a href="#fin">Fin</a></li>
+  </ul>
+</nav></div>
+</details>
+
+
+    <div class="content">
+        
+<div class="alert alert--important" role="note">
+    <p class="alert__label">Importante</p>
+    <div class="alert__body"><p>Si quieres obtener información y una explicación más detallada, visita la 
+<a href="https://wiki.archlinux.org/title/VirtualBox_%28Espa%C3%B1ol%29" class="link-external" rel="noopener noreferrer" target="_blank">Arch Wiki
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+.</p></div>
+</div>
+<h2 id="instalar-virtualbox" class="heading">Instalar VirtualBox
+    <a class="heading__anchor" href="#instalar-virtualbox" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>Los paquetes que debes instalar son:</p>
+<ul>
+<li><code>virtualbox</code></li>
+<li><code>virtualbox-host-dkms</code>: proporciona módulos al sistema anfitrión.</li>
+<li><code>linux-headers</code>: paquete de encabezado para el kernel, para compilar los módulos de VirtualBox.</li>
+</ul>
+<p>Por defecto al instalar el paquete <code>virtualbox</code>, también se instala el paquete <code>virtualbox-host-dkms</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo pacman -S virtualbox linux-headers
+</span></span></code></pre></div><h2 id="cargar-los-módulos-del-kernel-de-virtualbox" class="heading">Cargar los módulos del kernel de VirtualBox
+    <a class="heading__anchor" href="#cargar-los-m%c3%b3dulos-del-kernel-de-virtualbox" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>Los módulos de VirtualBox se cargan automáticamente al momento del arranque, gracias a <code>systemd-modules-load.service</code>.</p>
+<p>Por lo que para cargar los módulos de VirtualBox, reinicia el sistema o cargalos manualmente.</p>
+<p>Para cargar un módulo manualmente después de la instalación de VirtualBox, ejecutamos.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo modprobe vboxdrv
+</span></span></code></pre></div><p>El módulo <code>vboxdrv</code> se debe cargar obligatoriamente antes de ejecutar cualquier máquina virtual.</p>
+<p>Otros módulos:</p>
+<ul>
+<li><code>vboxnetadp</code>: para crear la interfaz del sistema anfitrión.</li>
+<li><code>vboxnetflt</code>: para iniciar una máquina virtual usando esa interfaz de red.</li>
+</ul>
+<p>También podemos cargar los módulos de VirtualBox manualmente ejecutando <code>vboxreload</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vboxreload
+</span></span></code></pre></div><h2 id="añadir-tu-usuario-al-grupo-vboxusers" class="heading">Añadir tu usuario al grupo vboxusers
+    <a class="heading__anchor" href="#a%c3%b1adir-tu-usuario-al-grupo-vboxusers" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>Para usar todas las funciones de virtualbox con nuestro usuario, debemos añadir nuestro usuario al grupo <code>vboxusers</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo usermod -aG vboxusers <span class="nv">$USER</span>
+</span></span></code></pre></div><p>Para que los cambios surtan efecto cierra sesión o reinicia el sistema.</p>
+<p>Comprueba los cambios ejecutando:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">groups <span class="o">&amp;&amp;</span> grep vboxusers /etc/group
+</span></span></code></pre></div><h2 id="fin" class="heading">Fin
+    <a class="heading__anchor" href="#fin" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>En principio con esto ya puedes empezar a crear tus máquinas virtuales y darles duro contra el muro, y si no, recuerda que tienes a tu disposición la 
+<a href="hhttps://wiki.archlinux.org/title/VirtualBox_%28Espa%C3%B1ol%29" class="link-external" rel="noopener noreferrer" target="_blank">Arch Wiki
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+.</p>
+<p>
+<img src="./maxwell.gif" alt="maxwell-gif" loading="lazy" decoding="async" title="El gato maxwell gif"></p>
+
+    </div>
+
+    <footer class="post-footer">
+        <ul class="tag-list">
+            <li><a href="/tags/linux/">Linux</a></li>
+            <li><a href="/tags/virtualbox/">Virtualbox</a></li>
+            <li><a href="/tags/archlinux/">Archlinux</a></li>
+        </ul>
+        <div class="post-actions">
+
+<div class="share">
+    <span class="share__label">Compartir</span>
+    <ul class="share__list">
+        <li>
+            <a class="share__link" href="mailto:?subject=%F0%9F%93%A6&#43;VirtualBox&#43;en&#43;Archlinux&amp;body=https%3A%2F%2Fb4zh.github.io%2Flinux%2Fvirtualbox-archlinux%2F" rel="noopener noreferrer" target="_blank"
+                aria-label="Share on Email (opens in a new window)" title="Email">
+<svg class="icon icon--email" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <rect x="2.5" y="5" width="19" height="14" rx="2"/>
+    <path d="m3 7 9 6 9-6"/>
+</svg>
+</a>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    </footer>
+<nav class="post-nav" aria-label="Posts">
+    <a class="post-nav__link post-nav__link--next" href="/linux/bash-blesh/" rel="next">
+        <span class="post-nav__side">
+            <span class="post-nav__label">Siguiente</span>
+            <span class="post-nav__title">🐍 Bash Modo Vim</span>
+        </span>
+<svg class="icon icon--arrow-right" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+</svg>
+
+    </a>
+</nav>
+
+</article>
+
+        </main>
+<nav class="zone-rail" id="zone-rail" aria-label="Zones">
+    <a class="zone-rail__mark" href="#instalar-virtualbox">
+        <span aria-hidden="true">A</span>
+        <span class="visually-hidden">Instalar VirtualBox</span>
+    </a>
+    <a class="zone-rail__mark" href="#cargar-los-m%c3%b3dulos-del-kernel-de-virtualbox">
+        <span aria-hidden="true">B</span>
+        <span class="visually-hidden">Cargar los módulos del kernel de VirtualBox</span>
+    </a>
+    <a class="zone-rail__mark" href="#a%c3%b1adir-tu-usuario-al-grupo-vboxusers">
+        <span aria-hidden="true">C</span>
+        <span class="visually-hidden">Añadir tu usuario al grupo vboxusers</span>
+    </a>
+    <a class="zone-rail__mark" href="#fin">
+        <span aria-hidden="true">D</span>
+        <span class="visually-hidden">Fin</span>
+    </a>
+</nav>
+<script>
+    
+    
+    
+    
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        var rail = document.getElementById("zone-rail");
+        var sheet = document.querySelector(".main");
+        if (!rail || !sheet) return;
+
+        var marks = Array.prototype.slice.call(rail.querySelectorAll(".zone-rail__mark"));
+        var targets = marks.map(function (m) {
+            return document.getElementById(decodeURIComponent(m.hash.slice(1)));
+        });
+        if (!marks.length || targets.indexOf(null) !== -1) return;
+
+        
+        
+        
+        
+        
+        
+        
+        function place() {
+            var box = sheet.getBoundingClientRect();
+            var top = box.top + window.scrollY;
+            var height = sheet.offsetHeight;
+            if (!height) return;
+            var offsets = targets.map(function (target) {
+                return (target.getBoundingClientRect().top + window.scrollY - top) / height;
+            });
+            marks.forEach(function (mark, i) {
+                var y = Math.min(Math.max(offsets[i], 0), 1);
+                mark.style.setProperty("--zone-top", (y * 100).toFixed(3) + "%");
+            });
+            rail.dataset.placed = "true";
+        }
+
+        
+        function spy() {
+            var line = window.scrollY + window.innerHeight * 0.25;
+            var current = -1;
+            targets.forEach(function (t, i) {
+                if (t.getBoundingClientRect().top + window.scrollY <= line) current = i;
+            });
+            marks.forEach(function (mark, i) {
+                if (i === current) {
+                    mark.setAttribute("aria-current", "true");
+                } else {
+                    mark.removeAttribute("aria-current");
+                }
+            });
+        }
+
+        
+        
+        
+        
+        var frame = null;
+        var replace = false;
+        function schedule(withPlace) {
+            if (withPlace === true) replace = true;
+            if (frame) return;
+            frame = requestAnimationFrame(function () {
+                frame = null;
+                if (replace) { replace = false; place(); }
+                spy();
+            });
+        }
+
+        place();
+        spy();
+        window.addEventListener("scroll", schedule, { passive: true });
+        window.addEventListener("resize", function () { schedule(true); }, { passive: true });
+        
+        window.addEventListener("load", function () { place(); spy(); });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+    });
+</script>
+
+    </div>
+
+    
+<footer class="footer">
+    <div class="footer__inner">
+        <span class="footer__issuer">b4zh - 2026
+        </span>
+        <span class="footer__meta">
+            <a href="/index.xml">RSS</a>
+            <span class="footer__sep" aria-hidden="true"></span>
+            <span>Construido con <a href="https://gohugo.io/" rel="noopener noreferrer"
+                    target="_blank">Hugo<span class="visually-hidden"> (opens in a new window)</span>
+</a></span>
+        </span>
+    </div>
+</footer>
+<a class="top-link" id="top-link" href="#top" aria-label="Back to top" title="Back to top">
+<svg class="icon icon--arrow-up" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M12 19V5M6 11l6-6 6 6"/>
+</svg>
+</a>
+
+<script>
+    (function () {
+        var root = document.documentElement;
+
+        var toggle = document.getElementById("theme-toggle");
+        if (toggle) {
+            var media = window.matchMedia("(prefers-color-scheme: dark)");
+
+            
+            var isDark = function () {
+                return root.dataset.theme === "dark" ||
+                    (root.dataset.theme !== "light" && media.matches);
+            };
+
+            
+            
+            
+            
+            
+            
+            var relabel = function () {
+                var next = isDark() ? toggle.dataset.toLight : toggle.dataset.toDark;
+                if (!next) return;
+                toggle.setAttribute("aria-label", next);
+                toggle.title = next;
+            };
+
+            relabel();
+
+            
+            
+            
+            
+            
+            
+            var snap = function (change) {
+                root.classList.add("is-theme-switching");
+                void root.offsetWidth;
+                change();
+                void root.offsetWidth;
+                root.classList.remove("is-theme-switching");
+            };
+
+            toggle.addEventListener("click", function () {
+                snap(function () {
+                    root.dataset.theme = isDark() ? "light" : "dark";
+                });
+                try { localStorage.setItem("pref-theme", root.dataset.theme); } catch (e) { }
+                relabel();
+            });
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            media.addEventListener("change", function () {
+                root.classList.add("is-theme-switching");
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        root.classList.remove("is-theme-switching");
+                    });
+                });
+                relabel();
+            });
+        }
+
+        var top = document.getElementById("top-link");
+        if (top) {
+            var onScroll = function () {
+                top.classList.toggle("is-visible", window.scrollY > 800);
+            };
+            window.addEventListener("scroll", onScroll, { passive: true });
+            onScroll();
+        }
+    })();
+</script>
+<script>
+    (function () {
+        var copy = "Copiar",
+            copied = "Copiado",
+            failed = "Copia fallida",
+            label = "Copy code block {n}";
+
+        
+        
+        
+        
+        
+        
+        
+        var announce = document.createElement("p");
+        announce.className = "visually-hidden";
+        announce.setAttribute("role", "status");
+        announce.setAttribute("aria-live", "polite");
+        document.body.appendChild(announce);
+
+        document.querySelectorAll(".content .highlight").forEach(function (block, i) {
+            var code = block.querySelector("code");
+            if (!code) return;
+            var button = document.createElement("button");
+            button.className = "copy-code";
+            button.type = "button";
+            button.textContent = copy;
+            
+            
+            
+            
+            
+            button.setAttribute("aria-label", label.replace("{n}", i + 1));
+
+            var restore = function () {
+                setTimeout(function () {
+                    button.textContent = copy;
+                    delete button.dataset.state;
+                    
+                    
+                    
+                    announce.textContent = "";
+                }, 1500);
+            };
+
+            button.addEventListener("click", function () {
+                
+                
+                
+                var text = (block.querySelector("td:last-child code") || code).innerText;
+                
+                
+                Promise.resolve()
+                    .then(function () {
+                        if (!navigator.clipboard) throw new Error("unavailable");
+                        return navigator.clipboard.writeText(text);
+                    })
+                    .then(function () {
+                        button.textContent = copied;
+                        announce.textContent = copied;
+                        restore();
+                    })
+                    .catch(function () {
+                        button.textContent = failed;
+                        button.dataset.state = "failed";
+                        announce.textContent = failed;
+                        restore();
+                    });
+            });
+            block.appendChild(button);
+        });
+    })();
+</script>
+</body>
+
+</html>
