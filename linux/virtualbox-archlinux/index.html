@@ -46,7 +46,7 @@
 <meta name="twitter:title" content="📦 VirtualBox en Archlinux">
 <meta name="twitter:description" content="Instalar virtualbox en archlinux.">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"b4zh"},"dateModified":"2026-10-13T11:44:53Z","datePublished":"2026-10-13T11:44:53Z","description":"Instalar virtualbox en archlinux.","headline":"📦 VirtualBox en Archlinux","inLanguage":"es-ES","keywords":"linux, virtualbox, archlinux","mainEntityOfPage":{"@id":"https://b4zh.github.io/linux/virtualbox-archlinux/","@type":"WebPage"},"publisher":{"@type":"Person","name":"b4zh"},"url":"https://b4zh.github.io/linux/virtualbox-archlinux/","wordCount":249}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"b4zh"},"dateModified":"2026-10-13T11:44:53Z","datePublished":"2026-10-13T11:44:53Z","description":"Instalar virtualbox en archlinux.","headline":"📦 VirtualBox en Archlinux","inLanguage":"es-ES","keywords":"linux, virtualbox, archlinux","mainEntityOfPage":{"@id":"https://b4zh.github.io/linux/virtualbox-archlinux/","@type":"WebPage"},"publisher":{"@type":"Person","name":"b4zh"},"url":"https://b4zh.github.io/linux/virtualbox-archlinux/","wordCount":425}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://b4zh.github.io/","name":"🏠 Home","position":1},{"@type":"ListItem","item":"https://b4zh.github.io/linux/","name":"🐧 Linux","position":2},{"@type":"ListItem","item":"https://b4zh.github.io/linux/virtualbox-archlinux/","name":"📦 VirtualBox en Archlinux","position":3}]}</script>
 
 
@@ -120,7 +120,7 @@
     </div>
     <div class="title-block__row">
         <dt class="title-block__label">Lectura</dt>
-        <dd class="title-block__value">2 min · 249 palabras</dd>
+        <dd class="title-block__value">3 min · 425 palabras</dd>
     </div>
     <div class="title-block__row">
         <dt class="title-block__label">Por</dt>
@@ -129,10 +129,6 @@
     <div class="title-block__row">
         <dt class="title-block__label">Subject</dt>
         <dd class="title-block__value"><a href="/tags/linux/">Linux</a>, <a href="/tags/virtualbox/">Virtualbox</a>, <a href="/tags/archlinux/">Archlinux</a></dd>
-    </div>
-    <div class="title-block__row title-block__row--flag">
-        <dt class="title-block__label">Estado</dt>
-        <dd class="title-block__value"><span class="draft-badge">Borrador</span></dd>
     </div>
 </dl>
 
@@ -144,6 +140,11 @@
     <li><a href="#instalar-virtualbox">Instalar VirtualBox</a></li>
     <li><a href="#cargar-los-módulos-del-kernel-de-virtualbox">Cargar los módulos del kernel de VirtualBox</a></li>
     <li><a href="#añadir-tu-usuario-al-grupo-vboxusers">Añadir tu usuario al grupo vboxusers</a></li>
+    <li><a href="#extension-pack">Extension Pack</a>
+      <ul>
+        <li><a href="#instalar-extension-pack">Instalar Extension Pack</a></li>
+      </ul>
+    </li>
     <li><a href="#fin">Fin</a></li>
   </ul>
 </nav></div>
@@ -217,7 +218,85 @@
 </span></span></code></pre></div><p>Para que los cambios surtan efecto cierra sesión o reinicia el sistema.</p>
 <p>Comprueba los cambios ejecutando:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">groups <span class="o">&amp;&amp;</span> grep vboxusers /etc/group
-</span></span></code></pre></div><h2 id="fin" class="heading">Fin
+</span></span></code></pre></div><h2 id="extension-pack" class="heading">Extension Pack
+    <a class="heading__anchor" href="#extension-pack" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>El paquete de extensiones es un conjunto de funcionalidades adicionales para Virtualbox, sin embargo no es necesario para el correcto funcionamiento del mismo.</p>
+<p>Aun así deberás instalarlo si vas a utilizar las siguientes funcionalidades que proporciona:</p>
+<ul>
+<li>
+<p>Integración con Oracle Cloud Infrastructure</p>
+</li>
+<li>
+<p>Controlador de Host USB 2.0 y USB 3.0</p>
+</li>
+<li>
+<p>Cámara Web del Host</p>
+</li>
+<li>
+<p>VirtualBox RDP</p>
+</li>
+<li>
+<p>ROM PXE</p>
+</li>
+<li>
+<p>Cifrado de disco</p>
+</li>
+<li>
+<p>NVMe</p>
+</li>
+</ul>
+<p>Hay un paquete disponible en el AUR llamado <code>virtualbox-ext-oracle</code>, sin embargo yo suelo descargarlo directamente desde el sitio web de 
+<a href="https://www.virtualbox.org/wiki/Downloads" class="link-external" rel="noopener noreferrer" target="_blank">VirtualBox
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+.</p>
+<p>Ya sea dándole en el <strong>boton de descarga</strong>, o usando <strong>wget</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget <span class="o">[</span>url/de/descarga/vbox-extpack<span class="o">]</span>
+</span></span></code></pre></div><h3 id="instalar-extension-pack" class="heading">Instalar Extension Pack
+    <a class="heading__anchor" href="#instalar-extension-pack" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h3>
+<p>La instalación se puede hacer a través de la interfaz gráfica o usando <code>VBoxManage</code>.</p>
+<p>La instalación del paquete de extensiones requiere <strong>acceso root</strong>. En la 
+<a href="https://wiki.archlinux.org/title/VirtualBox_%28Espa%C3%B1ol%29#Paquete_de_extensiones" class="link-external" rel="noopener noreferrer" target="_blank">Arch Wiki
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+ se menciona el uso de herramientas como 
+<a href="https://wiki.archlinux.org/title/Polkit" class="link-external" rel="noopener noreferrer" target="_blank">Polkit
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+ para otorgar acceso privilegiado a VirtualBox.</p>
+<p>Yo instalaré el extensión pack usando <code>sudo</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo VBoxManage extpack install <span class="o">[</span>/ruta/del/extension/pack.vbox-extpack<span class="o">]</span>
+</span></span></code></pre></div><p>Aceptas los términos y condiciones y listo.</p>
+<h2 id="fin" class="heading">Fin
     <a class="heading__anchor" href="#fin" tabindex="-1" aria-hidden="true"
         title="Link to this section">
 <svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
@@ -297,8 +376,12 @@
         <span aria-hidden="true">C</span>
         <span class="visually-hidden">Añadir tu usuario al grupo vboxusers</span>
     </a>
-    <a class="zone-rail__mark" href="#fin">
+    <a class="zone-rail__mark" href="#extension-pack">
         <span aria-hidden="true">D</span>
+        <span class="visually-hidden">Extension Pack</span>
+    </a>
+    <a class="zone-rail__mark" href="#fin">
+        <span aria-hidden="true">E</span>
         <span class="visually-hidden">Fin</span>
     </a>
 </nav>
