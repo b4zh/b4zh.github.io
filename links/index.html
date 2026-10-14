@@ -109,6 +109,44 @@
 </header>
 <div class="content sheet-note"><p>
 <img src="./penguin-pc.png" alt="./pinguino-pc" loading="lazy" decoding="async" title="Pingüino usando la computadora"></p>
+<h2 id="textos" class="heading">Textos
+    <a class="heading__anchor" href="#textos" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>
+<a href="https://riggraz.dev/dialogue-developer.html" class="link-external" rel="noopener noreferrer" target="_blank">Diálogo entre un desarrollador y un niño
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+</p>
+<h2 id="juegos" class="heading">Juegos
+    <a class="heading__anchor" href="#juegos" tabindex="-1" aria-hidden="true"
+        title="Link to this section">
+<svg class="icon icon--hash" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M5 9h14M5 15h14M10 3.5 8 20.5M16 3.5l-2 17"/>
+</svg>
+</a>
+</h2>
+<p>
+<a href="https://slowroads.io/" class="link-external" rel="noopener noreferrer" target="_blank">Slow Roads
+<svg class="icon icon--external" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M14 4h6v6M20 4l-8.5 8.5"/>
+    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+</svg>
+<span class="visually-hidden"> (opens in a new window)</span>
+</a>
+</p>
 </div>
 <p class="empty-note">Todavía no hay nada aquí.</p>
 
@@ -116,6 +154,96 @@
 
 
         </main>
+<nav class="zone-rail" id="zone-rail" aria-label="Zones">
+    <a class="zone-rail__mark" href="#textos">
+        <span aria-hidden="true">A</span>
+        <span class="visually-hidden">Textos</span>
+    </a>
+    <a class="zone-rail__mark" href="#juegos">
+        <span aria-hidden="true">B</span>
+        <span class="visually-hidden">Juegos</span>
+    </a>
+</nav>
+<script>
+    
+    
+    
+    
+    
+    document.addEventListener("DOMContentLoaded", function () {
+        var rail = document.getElementById("zone-rail");
+        var sheet = document.querySelector(".main");
+        if (!rail || !sheet) return;
+
+        var marks = Array.prototype.slice.call(rail.querySelectorAll(".zone-rail__mark"));
+        var targets = marks.map(function (m) {
+            return document.getElementById(decodeURIComponent(m.hash.slice(1)));
+        });
+        if (!marks.length || targets.indexOf(null) !== -1) return;
+
+        
+        
+        
+        
+        
+        
+        
+        function place() {
+            var box = sheet.getBoundingClientRect();
+            var top = box.top + window.scrollY;
+            var height = sheet.offsetHeight;
+            if (!height) return;
+            var offsets = targets.map(function (target) {
+                return (target.getBoundingClientRect().top + window.scrollY - top) / height;
+            });
+            marks.forEach(function (mark, i) {
+                var y = Math.min(Math.max(offsets[i], 0), 1);
+                mark.style.setProperty("--zone-top", (y * 100).toFixed(3) + "%");
+            });
+            rail.dataset.placed = "true";
+        }
+
+        
+        function spy() {
+            var line = window.scrollY + window.innerHeight * 0.25;
+            var current = -1;
+            targets.forEach(function (t, i) {
+                if (t.getBoundingClientRect().top + window.scrollY <= line) current = i;
+            });
+            marks.forEach(function (mark, i) {
+                if (i === current) {
+                    mark.setAttribute("aria-current", "true");
+                } else {
+                    mark.removeAttribute("aria-current");
+                }
+            });
+        }
+
+        
+        
+        
+        
+        var frame = null;
+        var replace = false;
+        function schedule(withPlace) {
+            if (withPlace === true) replace = true;
+            if (frame) return;
+            frame = requestAnimationFrame(function () {
+                frame = null;
+                if (replace) { replace = false; place(); }
+                spy();
+            });
+        }
+
+        place();
+        spy();
+        window.addEventListener("scroll", schedule, { passive: true });
+        window.addEventListener("resize", function () { schedule(true); }, { passive: true });
+        
+        window.addEventListener("load", function () { place(); spy(); });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+    });
+</script>
 
     </div>
 
