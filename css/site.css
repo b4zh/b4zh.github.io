@@ -1,0 +1,138 @@
+/* GENERAL CSS */
+body {
+	margin: 20px;
+	font-family: monospace;
+	font-size: large;
+	background-color: #181a1b;
+	/*color: #e8e6e3;*/
+	color: #ffffff;
+	#max-width: 40em;
+}
+
+a {
+	color: #8acb69;
+}
+
+ul {
+	list-style-type: square;
+}
+
+code {
+	display: inline-block;
+	background-color: #333333;
+	padding: 0 0.3em 0 0.3em;
+}
+
+kbd {
+	border-radius: 2px;
+	padding: 2px;
+	border: 1px solid #ffffff;
+}
+
+.img-flip:hover {
+	transform: scaleX(-1)
+}
+
+.letra {
+	background-color: #e8e6e3;
+	color: #181a1b;
+}
+
+.div_note {
+	background-color: #8acb6915;
+	margin: 1em 0;
+	padding: 0.5em 1em;
+	border: thin solid #8acb69;
+	border-left-width: 0.25rem;
+}
+
+.strong_note {
+	display: block;
+	border-bottom: 1px solid #ffffff;
+	margin-bottom: 0.5em;
+	padding-bottom: 0.25em;
+}
+
+.h1_underline {
+	display: block;
+	border-bottom: 1px solid #ffffff;
+	margin-bottom: 0.5em;
+	padding-bottom: 0.25em;
+}
+
+.pre_code {
+	padding: 10px;
+	background-color: #333333;
+	color: #ffffff;
+	border: thin solid #666666;
+	overflow: scroll;
+}
+
+
+.center-body {
+	max-width: 50em;
+	margin: 0 auto;
+	padding: 1em;
+	line-height: 1.50;
+}
+
+.home {
+	background-color: #8acb69;
+	color: #181a1b;
+	padding: 2px;
+	text-decoration: none;
+}
+
+.ul_ctf {
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+.a_ctf {
+	color: white;
+}
+
+/*--- BEGIN HMV COLOR ---*/
+.rose {
+	color: #f09cb8;
+}
+
+.p_beginner {
+	background-color: #28A745;
+	color: #000000;
+	padding: 2px;
+}
+
+.p_intermediate {
+	background-color: #FFC107;
+	color: #000000;
+	padding: 2px;
+}
+
+.p_advanced {
+	background-color: #DC3545;
+	color: #000000;
+	padding: 2px;
+}
+/*--- END HMV COLOR---*/
+
+
+/* ---  BEGIN TABLE ---*/
+.table {
+	display: table;
+}
+
+.heading {
+	display: table-row;
+	font-weight: bold;
+}
+
+.row {
+	display: table-row;
+}
+
+.cell {
+	display: table-cell;
+	padding-right: 15px;
+}
+/* ---  END TABLE ---*/

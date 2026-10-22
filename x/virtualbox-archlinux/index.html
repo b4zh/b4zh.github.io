@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>b4zh - VirtualBox en ArchLinux</title>
+		<link rel="stylesheet" type="text/css" href="../../css/site.css">
+		<meta charset="utf-8">
+	</head>
+	<body class="center-body">
+		<p><a href="../../b/" target="_blank">Blog</a> / <a href="../.">Linux</a></p>
+		<h1 class="h1_underline">VirtualBox en ArchLinux</h1>
+		<h3>22/10/2026</h3>
+		<h3>by <a href="../../index.html" target="_blank">b4zh</a></h3>
+		<p>-----</p>
+		<div class="div_note">
+			<strong class="strong_note">Nota</strong>
+			<p>Si quieres obtener información y una explicación más detallada, visita la <a href="https://wiki.archlinux.org/title/VirtualBox_(Espa%C3%B1ol)" target="_blank">Arch Wiki</a>.</p>
+		</div>
+		<h2>Instalar VirtualBox</h2>
+		<p>Los paquetes que debes instalar son:</p>
+		<ul>
+			<li><code>virtualbox</code></li>
+			<li><code>virtualbox-host-dkms</code>: proporciona módulos al sistema anfitrión.</li>
+			<li><code>linux-headers</code>: paquete de encabezado para el kernel, para compilar los módulos de VirtualBox.</li>
+		</ul>
+		<p>Por defecto al instalar el paquete <code>virtualbox</code>, también se instala el paquete <code>virtualbox-host-dkms</code>.</p>
+<pre class="pre_code">
+sudo pacman -S virtualbox linux-headers
+</pre>
+		<h2>Cargar los módulos del kernel de VirtualBox</h2>
+		<p>Los módulos de VirtualBox se cargan automáticamente al momento del arranque, gracias a <code>systemd-modules-load.service</code>.</p>
+		<p>Por lo que para cargar los módulos de VirtualBox, reinicia el sistema o cargalos manualmente.</p>
+		<p>Para cargar un módulo manualmente después de la instalación de VirtualBox, ejecutamos.</p>
+<pre class="pre_code">
+sudo modprobe vboxdrv
+</pre>
+	<p>El módulo <code>vboxdrv</code> se debe cargar obligatoriamente antes de ejecutar cualquier máquina virtual.</p>
+	<p>Otro módulos:</p>
+	<ul>
+		<li><code>vboxnetadp</code>: para crear la interfaz del sistema anfitrión.</li>
+		<li><code>vboxnetflt</code>: para iniciar una máquina virtual usando esa interfaz de red.</li>
+	</ul>
+	<p>También podemos cargar los módulos de VirtualBox manualmente ejecutando <code>vboxreload</code>.</p>
+<pre class="pre_code">
+sudo vboxreload
+</pre>
+	<h2>Añadir tu usuario al grupo vboxusers</h2>
+	<p>Para usar todas las funciones de virtualbox con nuestro usuario, debemos añadir nuestro usuario al grupo <code>vboxusers</code>.</p>
+<pre class="pre_code">
+sudo usermod -aG vboxusers $USER
+</pre>
+	<p>Para que los cambios surtan efecto cierra sesión o reinicia el sistema.</p>
+	<p>Comprueba los cambios ejecutando:</p>
+<pre class="pre_code">
+groups && grep "vboxusers" /etc/group
+</pre>
+	<h2>Extension Pack</h2>
+	<p>El paquete de extensiones es un conjunto de funcionalidades adicionales para Virtualbox, sin embargo no es necesario para el correcto funcionamiento del mismo.</p>
+	<p>Aun así deberás instalarlo si vas a utilizar las siguientes funcionalidades que proporciona:</p>
+	<ul>
+		<li>Integración con Oracle Cloud Infrastructure.</li>
+		<li>Controlador de Host USB 2.0 y USB 3.0.</li>
+		<li>Cámara Web del Host.</li>
+		<li>VirtualBox RDP.</li>
+		<li>ROM PXE.</li>
+		<li>Cifrado de disco.</li>
+		<li>NVMe.</li>
+	</ul>
+	<p>Hay un paquete disponible en el AUR llamado <code>virtualbox-ext-oracle</code>, sin embargo yo suelo descargarlo directamente desde el sitio web de <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">VirtualBox</a>.</p>
+	<p>Ya sea dándole en el <strong>boton de descarga</strong>, o usando <strong>wget</strong>:</p>
+<pre class="pre_code">
+wget [url/de/descarga/vbox-extpack]
+</pre>
+	<h3>Instalar Extension Pack</h3>
+	<p>La instalación se puede hacer a través de la interfaz gráfica o usando <code>VBoxManage</code>.</p>
+	<p>La instalación del paquete de extensiones requiere <strong>acceso root</strong>. En la <a href="https://wiki.archlinux.org/title/VirtualBox_%28Espa%C3%B1ol%29#Paquete_de_extensiones" target="_blank">Arch Wiki</a> se menciona el uso de herramientas como <a href="https://wiki.archlinux.org/title/Polkit" target="_blank">Polkit</a> para otorgar acceso privilegiado a VirtualBox.</p>
+	<p>Yo instalaré el extensión pack usando <code>sudo</code>.</p>
+<pre class="pre_code">
+sudo VBoxManage extpack install [/ruta/del/extension/pack.vbox-extpack]
+</pre>
+	<p>Aceptas los términos y condiciones y listo.</p>
+	<h2>Fin</h2>
+	<p>En principio con esto ya puedes empezar a crear tus máquinas virtuales y darles duro contra el muro, y si no, recuerda que siempre tienes a tu disposición la <a href="https://wiki.archlinux.org/title/VirtualBox_%28Espa%C3%B1ol%29" target="_blank">Arch Wiki</a>.</p>
+	</body>
+</html>

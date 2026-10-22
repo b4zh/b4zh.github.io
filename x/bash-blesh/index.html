@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>b4zh - Bash modo Vi(Vim)</title>
+		<link rel="stylesheet" type="text/css" href="../../css/site.css">
+		<meta charset="utf-8">
+	</head>
+	<body class="center-body">
+		<p><a href="../../b/" target="_blank">Blog</a> / <a href="../.">Linux</a></p>
+		<h1 class="h1_underline">Bash modo Vi(Vim)</h1>
+		<h3>19/10/2026</h3>
+		<h3>by <a href="../../index.html" target="_blank">b4zh</a></h3>
+		<p>-----</p>
+		<h2>¿Qué es ble.sh?</h2>
+		<p><a href="https://github.com/akinomyoga/ble.sh" target="_blank">Bash Line Editor</a> es un editor de línea de comandos escrito en bash puro.</p>
+		<p>Con <code>ble.sh</code> podemos agregar a <code>bash</code> las siguientes características:</p>
+		<ul>
+			<li>Resaltado de sintaxis.</li>
+			<li>Autocompletado mejorado.</li>
+			<li>Modo de edición de Vim</li>
+		</ul>
+		<h2>Instalación y configuración</h2>
+		<div class="div_note">
+			<strong class="strong_note">Nota</strong>
+			<p>Los pasos aquí descritos corresponden a la documentación oficial de <a href="https://github.com/akinomyoga/ble.sh#1-usage" target="_blank">ble.sh</a></p>
+		</div>
+		<h3>Instalación</h3>
+		<ol>
+			<li>Clonamos el repositorio:</li>
+<pre class="pre_code">
+git clone --recursive https://github.com/akinomyoga/ble.sh.git
+cd ble.sh
+</pre>
+			<li>Instalamos <code>ble.sh</code> en nuestro sistema con el comando <code>make</code>.</li>
+<pre class="pre_code">
+make install
+</pre>
+			<p>Esto instalará <code>ble.sh</code> en <code>~/.local/share/blesh/</code> y <code>~/.local/share/doc/blesh/</code></p>
+			<li>Para cargar <code>ble.sh</code> por defecto en sesiones interactivas de <code>bash</code>, agregamos las siguientes líneas en nuestro <code>.bashrc</code>.</li>
+<pre class="pre_code">
+# bashrc
+
+# Agrega estas líneas al principio de .bashrc:
+[[ $- == *i* ]] && source -- /path/to/blesh/ble.sh --attach=none
+
+# Aquí van los ajustes de tu archivo bashrc...
+
+# Agregue esta línea al final de .bashrc:
+[[ ! ${BLE_VERSION-} ]] || ble-attach
+</pre>
+<p>Reemplaza <code>/path/to/ble/ble.sh</code> por la ruta en donde se encuentra instalado <code>ble.sh</code>. Si no cambiaste la ruta de instalación durante la compilación, la ruta es <code>~/.local/share/blesh/ble.sh</code>.</p>
+		</ol>
+		<h3>Configuración</h3>
+		<p>Para configurar ciertas características de <code>ble.sh</code> tenemos que crear el fichero <code>.blerc</code> en el directorio <strong>home</strong> de nuestro usuario.</p>
+		<p><code>.blerc</code> es un script Bash que se ejecuta durante la carga de <strong>blesh</strong>.</p>
+<pre class="pre_code">touch ~/.blerc</pre>
+		<p><strong>Blesh</strong> proporciona una plantilla del fichero de configuración llamada <a href="https://github.com/akinomyoga/ble.sh/blob/master/blerc.template" target="_blank">blerc.template</a></p>
+		<p>Mi configuración es esta:</p>
+<pre class="pre_code">
+#!/bin/bash
+
+# deshabilitar el autocompletado
+bleopt complete_auto_complete=
+# deshabilitar los marcadores "[ble: ...]"
+bleopt prompt_eol_mark=''
+bleopt edit_marker=
+bleopt edit_marker_error=
+# habilitar el modo vim
+set -o vi
+
+# configuración del modo vim
+function blerc/vim-mode-hook {
+        # desactivar la información del modo actual
+        bleopt keymap_vi_mode_show=
+
+        # Forma del cursor para cada modo
+        ble-bind -m vi_nmap --cursor 2
+        ble-bind -m vi_imap --cursor 5
+        ble-bind -m vi_omap --cursor 4
+        ble-bind -m vi_xmap --cursor 2
+        ble-bind -m vi_cmap --cursor 0
+
+        # Descartar la línea con C-c
+        ble-bind -m vi_imap -f 'C-c' discard-line
+        ble-bind -m vi_nmap -f 'C-c' discard-line
+
+        # agregando funcionalidades de vim-surround
+        ble-import vim-surround
+}
+blehook/eval-after-load keymap_vi blerc/vim-mode-hook
+</pre>
+		<p>Con esta configuración:</p>
+		<ul>
+			<li>Deshabilito el autocompletado.</li>
+			<li>Deshabilito los marcadores tipo <code>[ble: ...]</code>.</li>
+			<li>Habilito el modo vi(vim)</li>
+			<li>Establezco la forma del cursor en cada modo.</li>
+			<li><kbd>Ctrl</kbd> + <kbd>C</kbd> para descartar la línea.</li>
+			<li>Agrego funcionalidades de vim-surround</li>
+		</ul>
+		<p>Para obtener información más detallada sobre que <strong>funciones</strong> puedes deshabilitar y sobre la configuración del <strong>modo vi(vim)</strong>, tienes a tu disposición la <strong>documentación oficial</strong>.</p>
+		<ul>
+			<li><a href="https://github.com/akinomyoga/ble.sh#22-disable-features" target="_blank">Deshabilitar funciones</a></li>
+			<li><a href="https://github.com/akinomyoga/ble.sh/wiki/Vi-(Vim)-editing-mode" target="_blank">Modo Vi(Vim)</a></li>
+		</ul>
+		<h4>Establecer tiempo de espera para ESC</h4>
+		<p>Notarás cierto retraso al cambiar de modos en el <strong>modo vi(vim)</strong>.</p>
+		<p>Para reducir el tiempo de espera, agregamos lo siguiente en alguna parte de nuestro <strong>~/.bashrc</strong>:</p>
+<pre class="pre_code">
+# Tiempo de espera de ESC - ble.sh
+stty time 0 # tiempo de espera en el pseudo-terminal handler, configurado mediante stty
+bind 'set keyseq-timeout 1' # tiempo de espera para Readline en bash
+</pre>
+		<h2>Fin</h2>
+		<p>Esto sería todo de mi parte, no olvides revisar la <a href="https://github.com/akinomyoga/ble.sh" target="_blank">documentación oficial de blesh</a> para entender todo con más detalle.</p>
+	</body>
+</html>
