@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>b4zh - Punteros en C</title>
+		<link rel="stylesheet" type="text/css" href="../../css/site.css">
+		<meta charset="utf-8">
+	</head>
+	<body class="center-body">
+		<p><a href="../../b/" target="_blank">Blog</a> / <a href="../.">Programming</a></p>
+		<h1 class="h1_underline">¿Qué m13rd4 son los *punteros en C?</h1>
+		<h3>26/10/2026</h3>
+		<h3>by <a href="../../index.html" target="_blank">b4zh</a></h3>
+		<p>-----</p>
+		<p>A ver, un puntero es una variable que almacena una referencia a la dirección de memoria de otra variable.</p>
+		<p>Al declarar una variable, a esta se le asigna un espacio en la memoria del sistema en donde se guarda su valor.</p>
+<pre class="pre_code">
+int num = 15;
+</pre>
+		<p>Ese espacio corresponde a una dirección de memoria, y esa dirección es representada como un número hexadecimal, por ejemplo, <code>0x1000</code> que es <code>4096</code> en decimal.</p>
+		<p>En dicha dirección se guarda el valor de nuestra variable <code>num</code> en formato hexadecimal, por lo que <code>15</code> se almacena como <code>0xf</code>, ya que <strong>15</strong> en hexadecimal es representado con la letra <strong>f</strong>.</p>
+		<h2>* y &</h2>
+		<p>En <strong>C</strong> un puntero se declara anteponiendo el símbolo <code>*</code> al nombre del puntero. Y para asignarle la dirección de memoria de una variable, se antepone el símbolo <code>&amp</code> al nombre de la variable.</p>
+		<p>Por ejemplo, a continuación se declara un puntero de tipo entero llamado <code>pnum</code> al que se le asigna la dirección de memoria de la variable <code>num</code>.</p>
+<pre class="pre_code">
+int *pnum = &ampnum;
+</pre>
+	<p>Una cosa importante a tener en cuenta es que el símbolo <code>*</code> también nos sirve para acceder al contenido que está almacenado en la dirección de memoria a la que apunta el puntero.</p>
+	<p>Por ejemplo, a continuación se declara un número entero llamado <code>n</code> al que se le asigna el puntero <code>*pnum</code>.</p>
+<pre class="pre_code">
+int n = *pnum;
+</pre>
+<p>Y al imprimir el valor de la variable <code>n</code> obtenemos <code>0xf</code>, que es como se guardó el número entero <code>15</code> en la memoria.</p>
+<pre class="pre_code">
+0xf
+</pre>
+	<h2>Ejemplo</h2>
+	<p>A continuación un programa en donde se usan los punteros:</p>
+	<a href="./punteros.c">punteros.c</a>
+<pre class="pre_code">
+#include &ltstdio.h&gt
+
+int main(void) {
+	// declarando un número entero llamado "num" al que se le asigna el valor 15.
+	int num = 15;
+	// declarando un puntero entero llamado "pnum" al que se le asigna la dirección de memoria de num.
+	int *pnum = &ampnum;
+	// declarando un número entero llamado "n" al que se le asigna el valor de la variable al que apunta el puntero.
+	int n = *pnum;
+
+	// imprimiendo la dirección de memoria del puntero. 
+	printf("%p\n", &ampnum); 
+  
+	// imprimiendo el valor al que apunta el puntero, 0xf == 15.
+	printf("%p\n", *pnum);
+	printf("%p\n", y);
+	return 0;
+}
+</pre>
+Como salida obtengo:
+<pre class="pre_code">
+0x7ffe9c0a0798
+0xf
+0xf
+</pre>
+
+	</body>
+</html>

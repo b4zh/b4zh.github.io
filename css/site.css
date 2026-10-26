@@ -136,3 +136,10 @@ kbd {
 	padding-right: 15px;
 }
 /* ---  END TABLE ---*/
+
+.div_card {
+	border: 1px solid white;
+	margin: 10px;
+	padding: 10px;
+	float: left;
+}
