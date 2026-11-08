@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>b4zh - m script.</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="../../css/site.css">
+		<meta charset="utf-8">
+	</head>
+	<body class="center-body">
+		<p><a href="../../b/" target="_blank">Blog</a> / <a href="../.">Scripts</a></p>
+		<h1 class="h1_underline">Buscar el nombre del paquete al que pertenece X herramienta.</h1>
+		<h3>08/11/2026</h3>
+		<h3>by <a href="../../index.html" target="_blank">b4zh</a></h3>
+		<p>-----</p>
+		<div class="div_note">
+			<strong class="strong_note">Nota</strong>
+			<p>Existen herramientas que ya hacen lo que hace mi tonto script, sin embargo estaba aburrido y pensé que era buena idea compartir la basura que hice.</p>
+		</div>
+		<p>Seguramente te ha pasado que estás aprendiendo usar una nueva herramienta en linux, y lo más probable es que dicha herramienta ya esté instalada en tu sistema, pero si eso no es así, entonces simplemente recurres a instalarla a través del gestor de paquetes de tu distribución.</p>
+		<p>Sin embargo puede ocurrir que dicho paquete no exista, por ejemplo, al querer instalar <code>ifconfig</code>:</p>
+<pre class="pre_code">
+pacman -S ifconfig
+</pre>
+<p>Mi gestor de paquetes me dice que dicho paquete no existe:</p>
+<pre class="pre_code">
+error: no se ha encontrado el paquete: ifconfig
+</pre>
+<p>Y razón no le falta, puesto que ifconfig es de hecho una utilidad del paquete <a href="https://archlinux.org/packages/core/x86_64/net-tools/" target="_blank">net-tools</a></p>
+<p>Y lo mismo pasa con otras herramientas, por ejemplo, <code>dig</code> y <code>nslookup</code> son parte del paquete <code>bind</code>.</p>
+<p>Por lo tanto yo necesitaba una herramienta que me dijera a que paquete pertenece X herramienta que quiero instalar y usar.</p>
+<p>Espero que hayas entendido mi punto, así que sin más rodeos, a continuación te presento y explico mi script de shell:</p>
+<h2>Script</h2>
+<a href="./m.sh" target="_blank">m.sh</a>
+<pre class="pre_code">
+#!/bin/sh
+
+output=$(curl -sL "https://man.archlinux.org/man/$1" | grep -A1 "Package name" | tail -n1 | tr "&lt;,&gt;" " " | awk '{print $4}')
+tool=$(printf "%s" "$output" | cut -d"/" -f2)
+
+test -n "$output" &amp;&amp; printf "%s\n" "$output" &amp;&amp; (printf "%s\n" "$tool" | xclip -sel clip) || printf "%s not found :(\n" "$1"
+</pre>
+<h2>Explicación</h2>
+<h3>$output</h3>
+<ul>
+	<li>El script recibe como argumento el nombre de la herramienta a consultar.</li>
+	<li>Con <code>curl</code> consulto el manual de la herramienta desde <a href="https://man.archlinux.org/" target="_blank">man.archlinux.org</a>.</li>
+	<li>Redirijo la salida al comando <code>grep</code> para obtener la línea que contiene el nombre del paquete.</li>
+<pre class="pre_code">
+&lt;dt&gt;Package name:&lt;/dt&gt;
+&lt;dd&gt;&lt;a href="https://www.archlinux.org/packages/core/x86_64/net-tools/"&gt;core/net-tools&lt;/a&gt;&lt;/dd&gt;
+</pre>
+<li>Redirijo la salida a <code>tail</code> para quedarme solo con la última línea.</li>
+<li>Redirijo la salida a <code>tr</code> para convertir <code>&lt;</code> y <code>&gt;</code> en espacios en blanco (entenderás el porque en el siguiente paso).</li>
+<pre class="pre_code">
+dd  a href="https://www.archlinux.org/packages/core/x86_64/net-tools/" core/net-tools /a  /dd
+</pre>
+<li>Redirijo la salida a <code>awk</code> para quedarme solo con la columna que contiene el nombre del paquete. Con <code>awk</code> podemos imprimir la X columna de un texto separado por espacios.</li>
+<pre class="pre_code">
+core/net-tools
+</pre>
+<li>Guardo todo lo anterior en una variable llamada <code>output</code>.</li>
+</ul>
+<h3>$tool</h3>
+<ul>
+	<li>Con <code>cut</code> me quedo solo con la parte del nombre del nombre del paquete, quitando el nombre del repositorio. Entenderás el porque más adelante.</li>
+<pre class="pre_code">
+net-tools
+</pre>
+	<li>Guardo el resultado en una variable llamada <code>tool</code>.</li>
+</ul>
+<h3>test</h3>
+<ul>
+	<li>Con <code>test</code> compruebo el contenido dentro de la variable <code>output</code>.</li>
+	<li>Si la herramienta consultada existe, entonces el contenido de la variable <code>output</code> es distinto de zero o está "llena", por lo tanto imprimo por pantalla el contenido de la variable <code>output</code> y copio en el portapapeles el contenido de la variable <code>tool</code>, que contiene solo el nombre del paquete, esto me sirve para tener a "mano" el nombre del paquete por si en verdad quiero instalarlo después de hacer la consulta.</li>
+	<li>Si el contenido de la variable <code>output</code> está vacío, significa que el parámetro de consulta no corresponde al nombre de una herramienta válida, y por lo tanto imprimo por pantalla: <code>not found</code>.</li>
+</ul>
+<h2>Ejemplo</h2>
+<p><strong>Comando:</strong></p>
+<pre class="pre_code">
+m dig
+</pre>
+<p><strong>Salida:</strong></p>
+<pre class="pre_code">
+extra/bind
+</pre>
+<p><strong>Copiado en el portapapeles:</strong> <code>bind</code></p>
+<p><strong>Captura de pantalla:</strong></p>
+<img src="./images/uso.png" width=340px>
+<h2>Otros</h2>
+<p>Como mencione antes, existen herramientas que ya hacen lo que hace mi tonto script, por ejemplo desde <strong>Arch Linux</strong> puedes usar:</p>
+<ul>
+	<li><code>pacman -F</code></li>
+	<br>
+	<li><code><a href="https://wiki.archlinux.org/title/Pkgfile" target="_blank">pkgfile</a></code></li>
+</ul>
+<img src="./images/otros.png" width=340px>
+<h2>Fin</h2>
+<p>Ya para terminar, si te preguntas el porque mi script se llama <code>m</code>, eso es porque soy vago, y no quise pensarlo mucho al momento de darle un nombre, además de que su uso es más rápido, ya sabes, la <code>m</code> viene de <code>man</code>, y solo tienes que escribir una letra, pero si quieres usar mi script tu puedes darle el nombre que quieras.</p>
+<p>Por cierto, aquí te dejo algunos recursos interesantes:</p>
+<ul>
+	<li><a href="https://es.unixlinux.online/bh/1002020933.html" target="_blank">Linux:en Arch Linux, ¿cómo puedo averiguar qué paquete instalar que contendrá el archivo X?</a></li>
+	<li><a href="https://www.cyberciti.biz/faq/howto-searching-for-package-in-arch-linux-using-regex/" target="_blank">How to search for a package in Arch Linux</a></li>
+</ul>
+<p>Ahora si adiós, que tengo que dormir.</p>
+<img src="./images/cat.png" width="340">
+	</body>
+</html>
