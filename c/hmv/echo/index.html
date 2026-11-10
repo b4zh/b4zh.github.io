@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>b4zh - echo.hmv</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="../../../css/site.css">
+		<meta charset="utf-8">
+	</head>
+	<body class="center-body">
+		<p><a class="a_rose" href="../../../b/" target="_blank">Blog</a> / <a class="a_rose" href="../.">HMV</a></p>
+		<h1 class="h1_rose_underline">HackMyVM - Echo</h1>
+		<img src="./images/echo.png" width="40%">
+		<p>-----</p>
+		<p><strong>SO:</strong> Linux</p>
+		<p><strong>Dificultad:</strong> Fácil</p>
+		<p><strong>Creador:</strong> @mikisbd</p>
+		<p><strong>Fecha de nacimiento:</strong> 13/10/2026</p>
+		<p>-----</p>
+		</div>
+		<h3>10/11/2026</h3>
+		<h3>by <a href="../../../index.html" target="_blank">b4zh</a></h3>
+		<p>-----</p>
+		<h2>Información</h2>
+		<p>Echo es una máquina linux de HMV de dificultad fácil en la cuál injectaremos comandos en una entrada vulnerable de una aplicación web que nos permitirá filtrar credenciales válidas para el acceso a la máquina mediante ssh y realizaremos un Secuestro de Bibliotecas de Python para escalar a root.</p>
+		<h2>Enumeración</h2>
+		<h3>arp-scan</h3>
+		<p>Envíamos solicitudes ARP en busca de hosts activos en la red local. En mi caso la máquina objetivo es la <code>10.0.4.6</code>.</p>
+<pre class="pre_code">
+arp-scan -l 
+</pre>
+		<img src="./images/arp.png" width=100%>
+		<p>Comprobamos la conectividad con la máquina objetivo mediante <code>ping</code>.</p>
+<pre class="pre_code">
+ping -c4 10.0.4.6
+</pre>
+		<img src="./images/ping.png" width=100%>
+		<h3>nmap</h3>
+		<p>Con <code>nmap</code> realizamos un escaneo de todos los puertos de la máquina objetivo:</p>
+		<ul>
+			<li><code>-p-</code>: todo el rango de puertos.</li>
+			<li><code>--open</code>: muestra solo los puertos abiertos.</li>
+			<li><code>-Pn</code>: deshabilitar el descubrimiento de host.</li>
+			<li><code>-n</code>: deshabilitar la resolución DNS.</li>
+			<li><code>--min-rate 3000</code>: enviar como mínimo 3000 paquetes por segundo.</li>
+			<li><code>-sS</code>: escaneo de tipo TCP/SYN.</li>
+			<li><code>-A</code>: habilitar la detección del SO, la detección de versiones, lanzar los scripts default y mostrar la ruta que toman los paquetes hasta llegar al destino.</li>
+			<li><code>-vvv</code>: activar el triple verbose, salida más detallada durante el escaneo.</li>
+			<li><code>-oN tcp.nmap</code>: guardar la salida del escaneo en el fichero especificado.</li>
+		</ul>
+<pre class="pre_code">
+nmap -p- --open -Pn -n --min-rate 3000 -sS -A -vvv -oN tcp.nmap 10.0.4.6
+</pre>
+		<img src="./images/nmap.png" width=100%>
+		<a href="./txt/tcp.nmap.txt" target="_blank">tcp.nmap</a>
+		<h4>Resultados del escaneo</h4>
+		<ul>
+			<li><strong>Puerto 22:</strong> Servicio OpenSSH 10.2p1.</li>
+			<li><strong>Puerto 80:</strong> Servicio Apache httpd 2.4.66.</li>
+			<ul>
+				<li><strong>robots.txt:</strong> <i>/backup/ /config.php</i></li>
+			</ul>
+		</ul>
+		<h3>Web</h3>
+		<p>Ingresamos a la web y vemos que se trata de una aplicación que nos permite enviar trazas ICMP a un host, y aparentemente lo hace usando la utilidad <code>ping</code> del sistema operativo linux.</p>
+		<p>Además, en el apartado de <strong>Node Telemetry</strong> identificamos un posible usuario del sistema, el usuario <code>clara</code>.</p>
+		<img src="./images/web.png" width=100%>
+		<p>Con <code>curl</code> consultamos el contenido del fichero <strong>robots.txt</strong> y cómo nos informó nmap, encontramos 2 entradas deshabilitadas.</p>
+		<img src="./images/robots.png" width=50%>
+		<p>Desde el navegador me dirigo a <strong>/backups/</strong> el cual es un directorio que contiene el fichero <strong>dev_notes.txt</strong>.</p>
+		<img src="./images/backups.png" width=70%>
+		<p>Con <code>curl</code> consultamos el contenido del fichero <strong>dev_notes.txt</strong>, el cual contiene un mensaje para <strong>Clara</strong>.</p>
+		<img src="./images/dev_notes.png" width=100%>
+		<p>A continuación la traducción del mensaje al español.</p>
+<pre class="pre_code">
+Nota interna - 
+</pre>
+		<h4>Inyección de comandos</h4>
+		<p>En la entrada para ingresar el host, intentamos usar <code>;</code> para concatenar comandos, y al hacerlo se nos devuelve un mensaje de advertencia.</p>
+		<img src="./images/ci1.png" width=100%>
+		<p>Sin embargo no todos los caracateres están filtrados, podemos usar <code>&amp;&amp;</code> o <code>||</code> para concatenar comandos.</p>
+		<p>Yo use <code>||</code> e ingrese un host inválido para que la salida sea solo la del comando inyectado.</p>
+		<p>Primero tenía que saber con que usuario se ejecutaba la utilidad ping.</p>
+		<p>Entonces pobre con un simple comando.</p>
+<pre class="pre_code">
+nada || id
+</pre>
+		<p>Y en efecto, acabamos de confirmar que tenemos una ejecución remota de comandos (RCE). Además de que ahora sabemos que estamos ejecutando la utilidad <code>ping</code> como el usuario <code>www-data</code>.</p>
+		<img src="./images/ci2.png" width=100%>
+		<p>Antes de intentar establecer una <strong>reverse shell</strong> decidí enumerar un poco más el sistema concatenando otros comandos.</p>
+		<p>Recordemos que en el mensaje a <strong>Clara</strong> se menciono que el fichero de configuración <code>config.php</code> contenía credenciales expuestas.</p>
+		<p>Listé el directorio actual y encontré que el fichero <code>config.php</code> se encontraba ahí.</p>
+<pre class="pre_code">
+nada || ls -lahR
+</pre>
+		<img src="./images/ci3.png" width=100%>
+		<p>Y si nos damos cuenta, tenemos permisos de lectura sobre el fichero <code>config.php</code>, así que leemos su contenido.</p>
+<pre class="pre_code">
+nada || cat config.php
+</pre>
+		<p>Y fiumba, nos encontramos con potenciales credenciales válidas: <code>clara:EchoSummer2026!</code></p>
+		<img src="./images/ci4.png" width=100%>
+		<p>Pero para confirmar que el usuario <code>clara</code> existe, le eché ojo al fichero <code>/etc/passwd</code>.</p>
+<pre class="pre_code">
+nada || grep "sh$" /etc/passwd
+</pre>
+		<p>Y si, <code>clara</code> es un usuario válido del sistema.</p>
+		<img src="./images/ci5.png" width=100%>
+		<h2>Acceso inicial</h2>
+		<p>Ahora con las credenciales obtenidas intentamos conectarnos al sistema mediante el servicio <code>ssh</code>.</p>
+		<img src="./images/ssh.png" width=100%>
+		<p><strong>Merequetengue!</strong>, estamos dentro :) !!!</p>
+		<h3>Enumeración del sistema</h3>
+		<p>Enumeramos el directorio actual y obtenemos la primera bandera, ya tu sabes, la flag <code>user.txt</code>.</p>
+<pre class="pre_code">
+ls -la
+</pre>
+		<img src="./images/user.png" width=100%>
+		<p>Descubrimos un dato importante, y eso es que <code>clara</code> es parte del grupo <code>devs</code>.</p>
+<pre class="pre_code">
+id
+</pre>
+		<img src="./images/devs.png" width=90%>
+		<p>Y recordando lo que decía la nota <code>dev_notes.txt</code> sabemos que los miembros del grupo <code>devs</code> pueden ejecutar como <code>root</code> y <strong>sin proporcionar contraseña</strong> el script de python que se encuentra en <code>/usr/local/bin/echo-report</code>.</p>
+		<p>Si enumeramos los permisos sudo de <code>clara</code> confirmamos lo que decía la nota.</p>
+<pre class="pre_code">
+sudo -l
+</pre>
+		<img src="./images/sudo.png" width=70%>
+		<p>Enumeramos los permisos del script <code>/usr/local/bin/echo-report</code>.</p>
+<pre class="pre_code">
+ls -l /usr/local/bin/echo-report
+</pre>
+		<p>Vemos que podemos leer su contenido, así que eso hacemos.</p>
+<pre class="pre_code">
+cat /usr/local/bin/echo-report
+</pre>
+		<p>La parte interesante del script es la importación del módulo <code>reporter</code> que se encuentra en la ruta <code>/opt/echo</code> que se añade al <code>sys.path</code>, de dicho módulo el script usa la función <code>run_report()</code>.</p>
+		<img src="./images/echo-report-1.png" width=100%>
+		<p>Pero antes de enumerar el directorio <code>/opt/echo</code> ejecuté el script con <code>sudo</code> para comprobar que en efecto si podemos ejecutar el script como el usuario <code>root</code> sin proporcionar contraseña. El script muestra un resumen del estado del sistema.</p>
+<pre class="pre_code">
+sudo /usr/local/bin/echo-report
+</pre>
+		<img src="./images/echo-report-2.png" width=100%>
+		<p>Ahora enumeramos los permisos del directorio <code>/op/echo</code> y su contenido.</p>
+<pre class="pre_code">
+ls -ld /opt/echo
+ls -la /opt/echo
+</pre>
+		<img src="./images/optecho.png" width=80%>
+		<p>Nos damos cuenta de que los miembros del grupo <code>devs</code> (grupo en el que esta <code>clara</code>), tienen los siguientes permisos.</p>
+		<ul>
+			<li>Todos los permisos para el directorio <code>/opt/echo</code>.</li>
+			<li>Modificar el contenido del script <code>reporter.py</code>, script que es importado como módulo por el script <code>/usr/local/bin/echo-report</code>.</li>
+		</ul>
+		<p>Todo esto es importante, ya que esta configuración de permisos es vulnerable, y es lo que nos va a permitir escalara a <code>root</code>.</p>
+		<h2>Escalada de privilegios</h2>
+		<p>-----</p>
+		<h3>Python Library Hijacking</h3>
+		<p>El Secuestro de Bibliotecas de Python es una técnica de escalada de privilegios, con la que nos aprovechamos de la forma en la que python resuelve la importación de los módulos.</p>
+		<p><i>Al final de esta publicación te adjunto un recurso que te servirá para profundizar en esta técnica de escalada de privilegios :), de nada.</i></p>
+		<p>-----</p>
+		<p>Estamos ante un caso de un <strong>módulo modificable</strong> que es <strong>importado</strong> por un <strong>script con privilegios</strong>.</p>
+		<p>Lo que vamos a hacer es modificar el contenido de <code>reporter.py</code> con nuestras propias líneas de código, para obtener una shell como <code>root</code>.</p>
+<pre class="pre_code">
+vim /opt/echo/reporter.py
+</pre>
+		<img src="./images/ossystem.png" width=100%>
+		<p>El script <code>/usr/local/bin/echo-report</code> importa el módulo <code>reporter.py</code> que ahora contiene código para generar una shell, por lo que al ejecutar el script con <code>sudo</code> logramos obtener una shell como el usuario <code>root</code>, el mandamás de todo el sistema, la cabra absoluta, The Absolute GOAT.</p>
+		<img src="./images/root.png" width=100%>
+		<h2>Flags</h2>
+		<p><strong>user:</strong> <code>HMV{7e3a91c4************************}</code></p>
+		<p><strong>root:</strong> <code>HMV{5c1b82e9************************}</code></p>
+		<h2>Recursos</h2>
+		<ul>
+			<li><a href="https://blog.yunolay.com/python-library-hijacking/" target="_blank">Python Library Hijacking - Yunolay</a></li>
+		</ul>
+		<h2>FIN</h2>
+		<p>Eso sería todo de mi parte, solo que me queda decirte lo que suelen decir los pros:</p>
+		<p>Happy :) Hacking!!!</p>
+		<img src="./images/end.jpg" width=60%>
+	</body>
+</html>

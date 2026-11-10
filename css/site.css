@@ -94,23 +94,38 @@ kbd {
 
 /*--- BEGIN HMV COLOR ---*/
 .rose {
-	color: #f09cb8;
+	color: #ff4f9a;
 }
 
-.p_beginner {
-	background-color: #28A745;
+.a_rose {
+	color: #ff4f9a;
+}
+
+.h1_rose_underline {
+	color: #ff4f9a;
+	display: block;
+	border-bottom: 1px solid #ffffff;
+	margin-bottom: 0.5em;
+	padding-bottom: 0.25em;
+}
+
+.p_easy {
+	/*background-color: #28A745;*/
+	background-color: #05df72;
 	color: #000000;
 	padding: 2px;
 }
 
-.p_intermediate {
-	background-color: #FFC107;
+.p_medium {
+	/*background-color: #FFC107;*/
+	background-color: #fdc700;
 	color: #000000;
 	padding: 2px;
 }
 
-.p_advanced {
-	background-color: #DC3545;
+.p_hard {
+	/*background-color: #DC3545;*/
+	background-color: #ff6467;
 	color: #000000;
 	padding: 2px;
 }

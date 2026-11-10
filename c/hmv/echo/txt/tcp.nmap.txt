@@ -1,0 +1,49 @@
+# Nmap 7.991 scan initiated Mon Nov  9 10:53:12 2026 as: /usr/lib/nmap/nmap --privileged -p- --open -Pn -n --min-rate 3000 -sS -A -vvv -oN tcp.nmap 10.0.4.6
+Nmap scan report for 10.0.4.6
+Host is up, received arp-response (0.00084s latency).
+Scanned at 2026-11-09 10:53:13 CET for 12s
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE REASON         VERSION
+22/tcp open  ssh     syn-ack ttl 64 OpenSSH 10.2p1 Ubuntu 2ubuntu3.8 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    syn-ack ttl 64 Apache httpd 2.4.66 ((Ubuntu))
+| http-robots.txt: 2 disallowed entries 
+|_/backups/ /config.php
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.66 (Ubuntu)
+|_http-title: Echo Diagnostics | Network Appliance
+MAC Address: 08:00:27:50:E4:F6 (Oracle VirtualBox virtual NIC)
+OS fingerprint not ideal because: maxTimingRatio (1.728000e+00) is greater than 1.4
+Aggressive OS guesses: Linux 4.15 - 5.19 (94%), Linux 3.2 - 4.14 (91%), Linux 2.6.32 - 3.10 (91%), Linux 2.6.32 (90%), Android 10 - 12 (Linux 4.14 - 4.19) (90%), Android 5 - 10 (Linux 3.4 - 3.18) (90%), Infoblox Trinzic network control appliance (90%), Linux 3.2 - 3.16 (90%), Google Chromecast or Roku TV (Linux 4.9) (90%), Linux 5.10 - 5.19 (90%)
+No exact OS matches for host (test conditions non-ideal).
+TCP/IP fingerprint:
+SCAN(V=7.991%E=4%D=11/9%OT=22%CT=1%CU=41545%PV=Y%DS=1%DC=D%G=N%M=080027%TM=6AF19815%P=x86_64-pc-linux-gnu)
+SEQ(SP=101%GCD=1%ISR=10B%TI=Z%CI=Z%TS=20)
+SEQ(SP=FA%GCD=1%ISR=FF%TI=Z%CI=Z%II=I%TS=21)
+OPS(O1=M5B4ST11NW8%O2=M5B4ST11NW8%O3=M5B4NNT11NW8%O4=M5B4ST11NW8%O5=M5B4ST11NW8%O6=M5B4ST11)
+WIN(W1=FE88%W2=FE88%W3=FE88%W4=FE88%W5=FE88%W6=FE88)
+ECN(R=Y%DF=Y%T=40%W=FAF0%O=M5B4NNSNW8%CC=Y%Q=)
+T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)
+T2(R=N)
+T3(R=N)
+T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=B1C2A1A3%Q=)
+T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=B1C2A1A3%Q=)
+T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=B1C2A1A3%Q=)
+T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=B1C2A1A3%Q=)
+U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)
+IE(R=N)
+IE(R=Y%DFI=N%T=40%CD=S)
+
+Uptime guess: 0.000 days (since Mon Nov  9 10:53:24 2026)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=257 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   0.84 ms 10.0.4.6
+
+Read data files from: /usr/share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Nov  9 10:53:25 2026 -- 1 IP address (1 host up) scanned in 13.20 seconds
