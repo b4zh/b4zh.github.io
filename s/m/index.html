@@ -37,7 +37,7 @@ error: no se ha encontrado el paquete: ifconfig
 output=$(curl -sL "https://man.archlinux.org/man/$1" | grep -A1 "Package name" | tail -n1 | tr "&lt;,&gt;" " " | awk '{print $4}')
 tool=$(printf "%s" "$output" | cut -d"/" -f2)
 
-test -n "$output" &amp;&amp; printf "%s\n" "$output" &amp;&amp; (printf "%s\n" "$tool" | xclip -sel clip) || printf "%s not found :(\n" "$1"
+test -n "$output" &amp;&amp; printf "%s\n" "$output" &amp;&amp; (printf "%s" "$tool" | xclip -sel clip) || printf "%s not found :(\n" "$1"
 </pre>
 <h2>Explicación</h2>
 <h3>$output</h3>
