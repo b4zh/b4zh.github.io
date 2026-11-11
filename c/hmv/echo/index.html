@@ -20,10 +20,38 @@
 		<h3>10/11/2026</h3>
 		<h3>by <a href="../../../index.html" target="_blank">b4zh</a></h3>
 		<p>-----</p>
-		<h2>Información</h2>
+		<nav>
+			<nav>Tabla de contenidos</nav>
+			<ol>
+				<li><a href="#info">Información</a></li>
+				<li><a href="#enum">Enumeración</a></li>
+				<ol>
+					<li><a href="#arp-scan">arp-scan</a></li>
+					<li><a href="#nmap">nmap</a></li>
+					<li><a href="#web">web</a></li>
+				</ol>
+				<li><a href="#vuln">Vulnerabilidades</a></li>
+				<ol>
+					<li><a href="#cmdi">Inyección de comandos</a></li>
+				</ol>
+				<li><a href="#acceso-inicial">Acceso inicial</a></li>
+				<ol>
+					<li><a href="#enum-sis">Enumeración del sistema</a></li>
+				</ol>
+				<li><a href="#escalada-priv">Escalada de privilegios</a></li>
+				<ol>
+					<li><a href="#py">Python Library Hijacking</a></li>
+				</ol>
+				<li><a href="#flags">Flags</a></li>
+				<li><a href="#recursos">Recursos</a></li>
+				<li><a href="#fin">Fin</a></li>
+			</ol>
+		</nav>
+		<p>-----</p>
+		<h2 id="info">Información</h2>
 		<p>Echo es una máquina linux de <a class="a_rose" href="https://hackmyvm.eu/" target="_blank">HMV</a> de dificultad fácil en la cuál inyectaremos comandos en una entrada vulnerable de una aplicación web que nos permitirá filtrar credenciales válidas para el acceso a la máquina mediante ssh y realizaremos un Secuestro de Bibliotecas de Python para escalar a root.</p>
-		<h2>Enumeración</h2>
-		<h3>arp-scan</h3>
+		<h2 id="enum">Enumeración</h2>
+		<h3 id="arp-scan">arp-scan</h3>
 		<p>Envíamos solicitudes ARP en busca de hosts activos en la red local. En mi caso la máquina objetivo es la <code>10.0.4.6</code>.</p>
 <pre class="pre_code">
 arp-scan -l 
@@ -34,7 +62,7 @@ arp-scan -l
 ping -c4 10.0.4.6
 </pre>
 		<img src="./images/ping.png" width=100%>
-		<h3>nmap</h3>
+		<h3 id="nmap">nmap</h3>
 		<p>Con <code>nmap</code> realizamos un escaneo de todos los puertos de la máquina objetivo:</p>
 		<ul>
 			<li><code>-p-</code>: todo el rango de puertos.</li>
@@ -60,11 +88,12 @@ nmap -p- --open -Pn -n --min-rate 3000 -sS -A -vvv -oN tcp.nmap 10.0.4.6
 				<li><strong>robots.txt:</strong> <i>/backup/ /config.php</i></li>
 			</ul>
 		</ul>
-		<h3>Web</h3>
-		<p>Ingresamos a la web y vemos que se trata de una aplicación que nos permite enviar trazas ICMP a un host, y aparentemente lo hace usando la utilidad <code>ping</code> del sistema operativo linux.</p>
-		<p>Además, en el apartado de <strong>Node Telemetry</strong> identificamos un posible usuario del sistema, el usuario <code>clara</code>.</p>
+		<h3 id="web">Web</h3>
+		<p>Ingresamos a la web y vemos que se trata de una aplicación que nos permite enviar paquetes ICMP a un host, y aparentemente lo hace usando la utilidad <code>ping</code> del sistema operativo linux.</p>
+		<p>Además, en el apartado de <strong>Node Telemetry</strong> identificamos un posible usuario del sistema, el usuario <code>clara</code>, y también el nombre de dominio <code>echo.hmv</code>.</p>
 		<img src="./images/web.png" width=100%>
 		<p>Con <code>curl</code> consultamos el contenido del fichero <strong>robots.txt</strong> y cómo nos informó nmap, encontramos 2 entradas deshabilitadas.</p>
+		<p>Además de un comentario en el que encontramos otra vez el nombre de dominio <code>echo.hmv</code>.</p>
 		<img src="./images/robots.png" width=50%>
 		<p>Desde el navegador me dirigo a <strong>/backups/</strong> el cual es un directorio que contiene el fichero <strong>dev_notes.txt</strong>.</p>
 		<img src="./images/backups.png" width=70%>
@@ -72,9 +101,17 @@ nmap -p- --open -Pn -n --min-rate 3000 -sS -A -vvv -oN tcp.nmap 10.0.4.6
 		<img src="./images/dev_notes.png" width=100%>
 		<p>A continuación la traducción del mensaje al español.</p>
 <pre class="pre_code">
-Nota interna - 
+Nota interna: Equipo DevOps Echo
+---------------------------------
+Hola clara,
+
+Recuerde que las cuentas de administración del sistema no deben compartir credenciales con conexiones de bases de datos web en config.php.
+Además, la utilidad echo-report en /usr/local/bin se ha configurado con acceso sudo para el equipo 'devs' para que puedas probar los resúmenes del estado del nodo sin solicitar la contraseña de root.
+
+- Líder de DevOps
 </pre>
-		<h4>Inyección de comandos</h4>
+		<h2 id="vuln">Vulnerabilidades</h2>
+		<h3 id="cmdi">Inyección de comandos</h3>
 		<p>En la entrada para ingresar el host, intentamos usar <code>;</code> para concatenar comandos, y al hacerlo se nos devuelve un mensaje de advertencia.</p>
 		<img src="./images/ci1.png" width=100%>
 		<p>Sin embargo no todos los caracateres están filtrados, podemos usar <code>&amp;&amp;</code> o <code>||</code> para concatenar comandos.</p>
@@ -99,17 +136,20 @@ nada || cat config.php
 </pre>
 		<p>Y fiumba, nos encontramos con potenciales credenciales válidas: <code>clara:EchoSummer2026!</code></p>
 		<img src="./images/ci4.png" width=100%>
-		<p>Pero para confirmar que el usuario <code>clara</code> existe, le eché ojo al fichero <code>/etc/passwd</code>.</p>
+		<p>Pero para confirmar que el usuario <code>clara</code> existe, le eché un ojo al fichero <code>/etc/passwd</code>.</p>
 <pre class="pre_code">
 nada || grep "sh$" /etc/passwd
 </pre>
 		<p>Y si, <code>clara</code> es un usuario válido del sistema.</p>
 		<img src="./images/ci5.png" width=100%>
-		<h2>Acceso inicial</h2>
+		<h2 id="acceso-inicial">Acceso inicial</h2>
 		<p>Ahora con las credenciales obtenidas intentamos conectarnos al sistema mediante el servicio <code>ssh</code>.</p>
+<pre class="pre_code">
+ssh clara@10.0.4.6
+</pre>
 		<img src="./images/ssh.png" width=100%>
 		<p><strong>Merequetengue!</strong>, estamos dentro :) !!!</p>
-		<h3>Enumeración del sistema</h3>
+		<h3 id="enum-sis">Enumeración del sistema</h3>
 		<p>Enumeramos el directorio actual y obtenemos la primera bandera, ya tu sabes, la flag <code>user.txt</code>.</p>
 <pre class="pre_code">
 ls -la
@@ -153,9 +193,9 @@ ls -la /opt/echo
 			<li>Modificar el contenido del script <code>reporter.py</code>, script que es importado como módulo por el script <code>/usr/local/bin/echo-report</code>.</li>
 		</ul>
 		<p>Todo esto es importante, ya que esta configuración de permisos es vulnerable, y es lo que nos va a permitir escalara a <code>root</code>.</p>
-		<h2>Escalada de privilegios</h2>
+		<h2 id="escalada-priv">Escalada de privilegios</h2>
 		<p>-----</p>
-		<h3>Python Library Hijacking</h3>
+		<h3 id="py">Python Library Hijacking</h3>
 		<p>El Secuestro de Bibliotecas de Python es una técnica de escalada de privilegios, con la que nos aprovechamos de la forma en la que python resuelve la importación de los módulos.</p>
 		<p><i>Al final de esta publicación te adjunto un recurso que te servirá para profundizar en esta técnica de escalada de privilegios :), de nada.</i></p>
 		<p>-----</p>
@@ -165,16 +205,16 @@ ls -la /opt/echo
 vim /opt/echo/reporter.py
 </pre>
 		<img src="./images/ossystem.png" width=100%>
-		<p>El script <code>/usr/local/bin/echo-report</code> importa el módulo <code>reporter.py</code> que ahora contiene código para generar una shell, por lo que al ejecutar el script con <code>sudo</code> logramos obtener una shell como el usuario <code>root</code>, el mandamás de todo el sistema, la cabra absoluta, The Absolute GOAT.</p>
+		<p>El script <code>/usr/local/bin/echo-report</code> importa el módulo <code>reporter.py</code> que ahora contiene código para ejecutará una shell <code>bash</code>, por lo que al ejecutar el script con <code>sudo</code> logramos obtener una shell <code>bash</code> como el usuario <code>root</code>, el mandamás de todo el sistema, la cabra absoluta, The Absolute GOAT.</p>
 		<img src="./images/root.png" width=100%>
-		<h2>Flags</h2>
+		<h2 id="flags">Flags</h2>
 		<p><strong>user:</strong> <code>HMV{7e3a91c4************************}</code></p>
 		<p><strong>root:</strong> <code>HMV{5c1b82e9************************}</code></p>
-		<h2>Recursos</h2>
+		<h2 id="recursos">Recursos</h2>
 		<ul>
 			<li><a href="https://blog.yunolay.com/python-library-hijacking/" target="_blank">Python Library Hijacking - Yunolay</a></li>
 		</ul>
-		<h2>FIN</h2>
+		<h2 id="fin">FIN</h2>
 		<p>Eso sería todo de mi parte, solo que me queda decirte lo que suelen decir los pros:</p>
 		<p>Happy :) Hacking!!!</p>
 		<img src="./images/end.jpg" width=60%>
